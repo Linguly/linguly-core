@@ -1,0 +1,2 @@
+# linguly-core
+Linguly Core
