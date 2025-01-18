@@ -7,7 +7,14 @@ from src.agent_proxy.agents.dictionary import Dictionary
 dictionary = Dictionary(id="1_dictionary", display_name="dictionary_1", model_connector_id="1_connector", config={"card_fields":[{"name": "In English","description":"translate"}]})
 
 def get_available_agents():
-    return [{"id": "1_dictionary", "type": "dictionary", "display_name": "dictionary_1"}]
+    return [{
+        "id": "1_dictionary",
+        "type": "dictionary",
+        "display_name": "dictionary_1",
+        "category": ["language", "translation"],
+        "interaction_type": ["text"],
+        "model_connector_id": "1_connector"
+    }]
 
 def get_agent(agent_id: str):
     return dictionary
