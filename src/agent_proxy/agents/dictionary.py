@@ -1,7 +1,9 @@
 
 from src.agent_proxy.types import Agent, Message
+from src.model_proxy import model_proxy
 from pydantic import BaseModel, Field
 from typing import List
+import json
 
 class CardField(BaseModel):
     name: str = Field(..., description="Field Name")
@@ -52,6 +54,21 @@ class Dictionary(Agent):
 
         # Call the parent class constructor with the modified data
         super().__init__(**data)
+            
+    @property
+    def model_connector(self):
+        return model_proxy.get_connector(self.model_connector_id)
+    
+    # Asking for a json output and then formatting it here can help us receiving more reliable output format from the model
+    def format_output(self, output_str: str) -> str:
+        try:
+            output_json = json.loads(output_str)
+            formatted_output = "\n".join(f"{key}: {value}" for key, value in output_json.items())
+        except json.JSONDecodeError as e:
+            formatted_output = "Invalid response from the model. Please try again!"
+        return formatted_output
         
     def reply(self, user_message: Message) -> List[Message]:
-        return [Message(content = Prompt.user(Prompt, self.to_learn_language, self.base_language, self.config.card_fields, user_message.content))]
+        model_response = self.model_connector.reply(user_message=Message(content = Prompt.user(Prompt, self.to_learn_language, self.base_language, self.config.card_fields, user_message.content)))
+        model_response.content = self.format_output(model_response.content)
+        return model_response

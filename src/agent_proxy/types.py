@@ -11,6 +11,7 @@ class Agent(BaseModel):
     display_name: str
     category: List[str]
     interaction_type: List[str]
+    model_connector_id: str
     
 class Message(BaseModel):
     content: str

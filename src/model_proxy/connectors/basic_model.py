@@ -28,5 +28,12 @@ class BasicModel(ModelConnector):
         # Call the parent class constructor with the modified data
         super().__init__(**data)
         
-    def reply(self, user_message: Message):
-        return [{"content": "Here is your first response from a Linguly Model : )"}]
+    def reply(self, user_message: Message) -> Message:
+        return Message(content = """{
+"translation": "training",
+"synonyms": [
+"education",
+"instruction"
+],
+"example": "She is undergoing training to learn her new job."
+}""")

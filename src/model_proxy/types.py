@@ -13,3 +13,6 @@ class ModelConnector(BaseModel):
     category: List[str]
     interaction_type: List[str]
     supported_languages: List[str]
+    
+class Message(BaseModel):
+    content: str
