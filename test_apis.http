@@ -1,0 +1,13 @@
+### Get all agents
+GET http://localhost:8000/agents
+Content-Type: application/json
+
+###
+
+### Send a message to an agent
+POST http://localhost:8000/agent
+Content-Type: application/json
+
+{
+    "content": "Hello, agent!"
+}
