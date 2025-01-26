@@ -1,11 +1,13 @@
+@base_url = http://localhost:8000
 ### Get all agents
-GET http://localhost:8000/agents
+GET {{base_url}}/agents
 Content-Type: application/json
 
 ###
 
+@agentId = 1_dictionary
 ### Send a message to an agent
-POST http://localhost:8000/agent
+POST {{base_url}}/agent/{{agentId}}/chat
 Content-Type: application/json
 
 {
