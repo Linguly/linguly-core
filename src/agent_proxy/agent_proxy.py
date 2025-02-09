@@ -30,6 +30,3 @@ def message_agent(agent_id: str, user_message: Message):
     agent = get_agent(agent_id)
     return agent.reply(user_message)
     
-    
-
-print(message_agent(agent_id="1_dictionary", user_message = Message(content= "test") ))

@@ -1,4 +1,5 @@
 # Linguly Core
+
 Linguly Core is the core of Linguly hosting the Agents and serving the interfaces.
 Here we define agents in YAML files and provide the list of available Agents for each interface.
 Interfaces can login and send user specific messages to a selected Agent.
@@ -29,7 +30,7 @@ pip install -r requirements.txt
 
 - run the server
 ```bash
-uvicorn src.main:app --reload --port 8000
+uvicorn src.main:app --reload --port 3001
 ```
 
-- open the API documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
+- open the API documentation: [http://localhost:3001/docs](http://localhost:3001/docs)
