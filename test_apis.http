@@ -1,4 +1,4 @@
-@base_url = http://localhost:8000
+@base_url = http://localhost:3001
 ### Get all agents
 GET {{base_url}}/agents
 Content-Type: application/json
