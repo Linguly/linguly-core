@@ -29,8 +29,15 @@ pip install -r requirements.txt
 ```
 
 - run the server
+
 ```bash
 uvicorn src.main:app --reload --port 3001
+```
+
+- or if you want to connect to a local ollama
+
+```bash
+BASIC_MODEL_URL=http://localhost:11434 uvicorn src.main:app --reload --port 3001
 ```
 
 - open the API documentation: [http://localhost:3001/docs](http://localhost:3001/docs)

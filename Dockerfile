@@ -13,6 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . .
 
+# Set the environment variables
+ARG BASIC_MODEL_URL
+ENV BASIC_MODEL_URL=$BASIC_MODEL_URL
+
 # Expose the port the app runs on
 EXPOSE 3001
 

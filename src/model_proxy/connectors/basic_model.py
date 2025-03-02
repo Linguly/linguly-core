@@ -1,7 +1,8 @@
-
+# To learn more about ollama APIs, visit https://pypi.org/project/ollama/
 from src.model_proxy.types import ModelConnector, Message
 from pydantic import BaseModel
 from typing import List
+from ollama import Client
 
 class Configuration(BaseModel):
     """
@@ -24,16 +25,40 @@ class BasicModel(ModelConnector):
         # Modify the config structure
         if "configuration" in data:
             data["config"] = data["config"]
-
+            
         # Call the parent class constructor with the modified data
         super().__init__(**data)
         
-    def reply(self, user_message: Message) -> Message:
-        return Message(content = """{
-"translation": "training",
-"synonyms": [
-"education",
-"instruction"
-],
-"example": "She is undergoing training to learn her new job."
-}""")
+    def form_messages(self, user_prompt: str, system_prompt: str = "") -> List:
+        messages = []
+        if system_prompt!="":
+            messages.append({
+                "role": "system",
+                "content": system_prompt
+            })
+        messages.append({
+            "role": "user",
+            "content": user_prompt
+        })
+        return messages   
+    
+            
+    def chat(self, messages):
+        client = Client( host=self.config.api_url )
+        response = client.chat(
+            model=self.model_name,
+            messages=messages,
+        )
+        return response.message.content
+        
+    def generate(self, prompt):
+        client = Client( host=self.config.api_url )
+        output = client.generate(
+            model=self.model_name,
+            prompt=prompt,
+        )
+        return output.response
+        
+    def reply(self, messages: List[Message]) -> Message:
+        response = self.generate(messages[0].content)
+        return Message(content = response, role = "assistant")
