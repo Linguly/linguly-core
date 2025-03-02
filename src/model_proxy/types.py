@@ -15,4 +15,5 @@ class ModelConnector(BaseModel):
     supported_languages: List[str]
     
 class Message(BaseModel):
+    role: str
     content: str

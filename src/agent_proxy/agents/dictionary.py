@@ -18,7 +18,7 @@ class Configuration(BaseModel):
     
 class Prompt:
     def card_fields_str(card_fields: List[CardField]):
-        return '\n'.join([f"{field.name}: //{field.description} " for field in card_fields])
+        return '\n'.join([f'"{field.name}": "{field.description}", ' for field in card_fields])
     
     def user(self, to_learn_language: str, base_language: str, card_fields: List[CardField], user_message: str):
         return f"""You are a dictionary and give me the following output fields based on the given inputs.
@@ -26,12 +26,12 @@ The output should be in json format with no additional text and information:
     
 # inputs
 phrase= {user_message}
-to_learn_language= {to_learn_language}
-base_language= {base_language}
     
 # outputs
+{{
 {self.card_fields_str(card_fields).replace("to_learn_language", to_learn_language).replace("base_language", base_language)}
-    """
+}}
+"""
 
 class Dictionary(Agent):
     """
@@ -65,10 +65,11 @@ class Dictionary(Agent):
             output_json = json.loads(output_str)
             formatted_output = "\n".join(f"{key}: {value}" for key, value in output_json.items())
         except json.JSONDecodeError as e:
-            formatted_output = "Invalid response from the model. Please try again!"
+            formatted_output = "Invalid response from the model. Please try again! \n Model response: \n" + output_str
         return formatted_output
         
     def reply(self, user_message: Message) -> List[Message]:
-        model_response = self.model_connector.reply(user_message=Message(content = Prompt.user(Prompt, self.to_learn_language, self.base_language, self.config.card_fields, user_message.content)))
+        user_message = Message(content = Prompt.user(Prompt, self.to_learn_language, self.base_language, self.config.card_fields, user_message.content), role="user")
+        model_response = self.model_connector.reply(messages=[user_message])
         model_response.content = self.format_output(model_response.content)
         return model_response

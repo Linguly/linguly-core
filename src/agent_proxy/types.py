@@ -14,4 +14,5 @@ class Agent(BaseModel):
     model_connector_id: str
     
 class Message(BaseModel):
+    role: str
     content: str
