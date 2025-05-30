@@ -57,4 +57,4 @@ def message_agent(agent_id: str, user_message: Message):
     return agent.reply(user_message)
 
 
-print(message_agent("1_dictionary", Message(content="ausrede", role="user")))
+#print(message_agent("1_dictionary", Message(content="ausrede", role="user")))

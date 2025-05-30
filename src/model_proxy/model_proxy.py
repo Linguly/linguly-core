@@ -8,7 +8,7 @@ import os
 basic_model = BasicModel(
     id="1_connector",
     display_name="llama3.2_3B_linguly_live",
-    config={"api_url": os.environ["BASIC_MODEL_URL"]},
+    config={"api_url": os.environ.get("BASIC_MODEL_URL", "http://localhost:11434")},
     model_name="llama3.2:3b",
     supported_languages=[
         "English",
