@@ -26,6 +26,7 @@ In the initial version, connection to the Dbs (DB Proxy) and to the models (Mode
 - install dependencies
 ```bash
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 - run the server
