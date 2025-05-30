@@ -41,3 +41,8 @@ BASIC_MODEL_URL=http://localhost:11434 uvicorn src.main:app --reload --port 3001
 ```
 
 - open the API documentation: [http://localhost:3001/docs](http://localhost:3001/docs)
+
+## Formatting
+
+- to install `pip install black`
+- to run on all files `black .` or specify a file or folder instead of `.`
