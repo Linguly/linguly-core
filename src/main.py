@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()  # Automatically looks for a .env file in the current directory
 
 from fastapi import FastAPI
