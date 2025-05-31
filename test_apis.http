@@ -1,40 +1,9 @@
 @base_url = http://localhost:3001
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODNiMGZiYjViYmFhN2ZjZWQ4ZmU3MWUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwiZXhwIjoxNzQ4NzY3NDY0fQ.gChJp0F_cv_W4uE2WAMsyi_KNBsbGl1J9iSds4riNss
-
-### User Authentication
-### Login as a user
-POST {{base_url}}/login
-Content-Type: application/json
-
-{
-    "email": "test@test.com",
-    "password": "tes6aaa23"
-}
-
-
-### Sign up a new user
-POST {{base_url}}/signup
-Content-Type: application/json
-
-{
-    "email": "test@test2.com",
-    "password": "tes6aaa23",
-    "name": "Test User"
-}
-
-### Get user profile
-GET {{base_url}}/user/me
-Content-Type: application/json
-Authorization: Bearer {{access_token}}
-
-
-################## Agents Management
-
 ### Get all agents
 GET {{base_url}}/agents
 Content-Type: application/json
 
-### Agents
+###
 
 @agentId = 1_dictionary
 ### Send a message to an agent
