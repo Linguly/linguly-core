@@ -43,6 +43,16 @@ BASIC_MODEL_URL=http://localhost:11434 uvicorn src.main:app --reload --port 3001
 
 - open the API documentation: [http://localhost:3001/docs](http://localhost:3001/docs)
 
+### Environment variables for local setup
+
+To successfully running the app locally you need to create a `.env` file in the root folder and provide the following the parameters:
+
+```t
+BASIC_MODEL_URL= # your ollama api url e.g. http://localhost:11434
+MONGODB_MAIN_URL=  # use your mongodb atlas uri or a local one
+JWT_SECRET= # use a long and secure secret in production
+```
+
 ## Formatting
 
 - to install `pip install black`
