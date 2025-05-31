@@ -2,7 +2,7 @@ fastapi==0.115.6
 uvicorn==0.34.0
 pydantic
 ollama
-"pymongo[srv]"==3.12
+pymongo[srv]==3.12
 pyyaml
 argon2-cffi
 python-jose[cryptography]
