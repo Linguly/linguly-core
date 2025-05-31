@@ -9,7 +9,7 @@ class UserAuth:
         #user_db = db_proxy
         pass
 
-    def login(email: str, password: str):
+    def login(self, email: str, password: str):
         # Validate the input data
         if not email or not password:
             raise ValueError("Invalid login data: email and password are required")
@@ -26,7 +26,7 @@ class UserAuth:
                 }
             }
         
-    def signup(name: str, email: str, password: str):
+    def signup(self, name: str, email: str, password: str):
         # Validate the input data
         # Check if email is unique, valid, and password meets security requirements
         if not name or not email or not password:

@@ -3,7 +3,7 @@
 GET {{base_url}}/agents
 Content-Type: application/json
 
-###
+### Agents
 
 @agentId = 1_dictionary
 ### Send a message to an agent
@@ -12,4 +12,26 @@ Content-Type: application/json
 
 {
     "content": "Hello, agent!"
+}
+
+
+### User Authentication
+
+### Login as a user
+POST {{base_url}}/user/login
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "test123"
+}
+
+### Sign up a new user
+POST {{base_url}}/user/signup
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "tes6aaa23",
+    "name": "Test User"
 }
