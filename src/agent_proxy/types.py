@@ -16,5 +16,5 @@ class Agent(BaseModel):
 
 
 class Message(BaseModel):
-    role: str
+    role: str = "user"  # Default role is 'user'
     content: str
