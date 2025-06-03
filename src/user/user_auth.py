@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import os
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from src.user.types import TokenData
+from src.user.types import UserInfo
 
 # Secret key & algorithm
 SECRET_KEY = os.getenv("JWT_SECRET")
@@ -90,21 +90,33 @@ class UserAuth:
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-    # Dependency to get current user from JWT token
-    def get_current_user(self, token: str = Depends(oauth2_scheme)) -> TokenData:
-        credentials_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+# Dependency to get current user from JWT token
+def get_current_user(token: str = Depends(oauth2_scheme)) -> UserInfo:
+    """ Validates the JWT token and returns the user data."""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            user_email: str = payload.get("sub")
-            if user_email is None:
-                raise credentials_exception
-            return TokenData(
-                sub=user_email, email=payload.get("email"), name=payload.get("name")
-            )
-        except JWTError:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("sub")
+        if user_id is None:
             raise credentials_exception
+        return UserInfo(
+            sub=user_id, email=payload.get("email"), name=payload.get("name")
+        )
+    except JWTError:
+        raise credentials_exception
+
+def validate_token(token: str = Depends(oauth2_scheme)):
+    """ This is used when the user data is not needed, just the token validation."""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+    )
