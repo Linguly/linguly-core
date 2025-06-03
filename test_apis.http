@@ -1,5 +1,5 @@
 @base_url = http://localhost:3001
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODNiMGZiYjViYmFhN2ZjZWQ4ZmU3MWUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwiZXhwIjoxNzQ4NzY3NDY0fQ.gChJp0F_cv_W4uE2WAMsyi_KNBsbGl1J9iSds4riNss
+@access_token = {{access_token}}
 
 ### User Authentication
 ### Login as a user
