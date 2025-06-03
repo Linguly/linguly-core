@@ -18,8 +18,8 @@ class Token(BaseModel):
     token_type: str = "bearer"
 
 
-# Token data model
-class TokenData(BaseModel):
+# UserInfo used in the Token
+class UserInfo(BaseModel):
     sub: Optional[str] = None  # user ID
     email: Optional[str] = None  # user email
     name: Optional[str] = None  # user name

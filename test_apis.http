@@ -1,8 +1,9 @@
 @base_url = http://localhost:3001
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODNiMGZiYjViYmFhN2ZjZWQ4ZmU3MWUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwiZXhwIjoxNzQ4NzY3NDY0fQ.gChJp0F_cv_W4uE2WAMsyi_KNBsbGl1J9iSds4riNss
+@access_token = {{login.response.body.access_token}}
 
 ### User Authentication
 ### Login as a user
+# @name login
 POST {{base_url}}/login
 Content-Type: application/json
 
@@ -13,6 +14,7 @@ Content-Type: application/json
 
 
 ### Sign up a new user
+# @name login
 POST {{base_url}}/signup
 Content-Type: application/json
 
@@ -33,6 +35,7 @@ Authorization: Bearer {{access_token}}
 ### Get all agents
 GET {{base_url}}/agents
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 ### Agents
 
@@ -40,6 +43,7 @@ Content-Type: application/json
 ### Send a message to an agent
 POST {{base_url}}/agent/{{agentId}}/chat
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
     "content": "Hello, agent!"
