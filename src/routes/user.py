@@ -5,6 +5,7 @@ from src.user.types import LoginRequest, SignupRequest, Token, UserInfo
 user_auth = UserAuth()
 router = APIRouter()
 
+
 @router.get("/user/me")
 def read_user(current_user: UserInfo = Depends(get_current_user)):
     return {
@@ -12,12 +13,14 @@ def read_user(current_user: UserInfo = Depends(get_current_user)):
         "current_user": current_user,
     }
 
+
 @router.post("/login", response_model=Token)
 def login(request: LoginRequest):
     try:
         return user_auth.login(**request.dict())
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 
 @router.post("/signup", response_model=Token)
 def signup(request: SignupRequest):

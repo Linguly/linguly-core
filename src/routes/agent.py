@@ -7,9 +7,13 @@ from src.agent_proxy import agent_proxy
 
 router = APIRouter()
 
-@router.get("/agents", response_model=List[Agent], dependencies=[Depends(validate_token)])
+
+@router.get(
+    "/agents", response_model=List[Agent], dependencies=[Depends(validate_token)]
+)
 def read_agents():
     return agent_proxy.get_available_agents()
+
 
 @router.post("/agent/{agent_id}/chat", response_model=Message)
 def message_agent(

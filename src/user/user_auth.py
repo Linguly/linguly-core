@@ -90,9 +90,10 @@ class UserAuth:
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
+
 # Dependency to get current user from JWT token
 def get_current_user(token: str = Depends(oauth2_scheme)) -> UserInfo:
-    """ Validates the JWT token and returns the user data."""
+    """Validates the JWT token and returns the user data."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -110,8 +111,9 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> UserInfo:
     except JWTError:
         raise credentials_exception
 
+
 def validate_token(token: str = Depends(oauth2_scheme)):
-    """ This is used when the user data is not needed, just the token validation."""
+    """This is used when the user data is not needed, just the token validation."""
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
@@ -119,4 +121,4 @@ def validate_token(token: str = Depends(oauth2_scheme)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
             headers={"WWW-Authenticate": "Bearer"},
-    )
+        )
