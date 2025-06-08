@@ -38,7 +38,7 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get Agents filtered 
-GET {{base_url}}/agents/filter?subcategories=add_to_learning_phrases&compatible_interfaces=telegram
+GET {{base_url}}/agents/filter?subcategories=add_to_learning_phrases&compatible_interfaces=telegram&categories=tool
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
