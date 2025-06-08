@@ -45,3 +45,23 @@ def select_goal(goal_id: str, current_user: UserInfo = Depends(get_current_user)
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Goal selection failed. Please check the provided data.",
         )
+
+
+# get the selected goal for the current user
+@router.get("/goals/selected")
+def get_selected_goal(current_user: UserInfo = Depends(get_current_user)):
+    """Get the selected goal for the current user."""
+    try:
+        selected_goal = goals.get_selected_goal(current_user.user_id)
+    except Exception as e:
+        print(f"Error retrieving selected goal: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred while retrieving the selected goal.",
+        )
+    if not selected_goal:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No selected goal found for the current user.",
+        )
+    return selected_goal

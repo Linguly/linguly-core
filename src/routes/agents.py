@@ -21,9 +21,7 @@ def read_agents():
     dependencies=[Depends(validate_token)],
 )
 def filter_agents(
-    categories: Optional[List[str]] = Query(
-        None, description="Filter by categories"
-    ),
+    categories: Optional[List[str]] = Query(None, description="Filter by categories"),
     subcategories: Optional[List[str]] = Query(
         None, description="Filter by subcategories"
     ),
@@ -36,8 +34,7 @@ def filter_agents(
         agents = [
             a
             for a in agents
-            if hasattr(a, "categories")
-            and set(categories).issubset(set(a.categories))
+            if hasattr(a, "categories") and set(categories).issubset(set(a.categories))
         ]
     if subcategories:
         agents = [

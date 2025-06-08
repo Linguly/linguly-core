@@ -77,3 +77,23 @@ class Goals:
                 {"$set": {"selected_goal": goal_id}},
             )
             print(f"User {user_id} updated with selected goal {goal_id}.")
+
+    def get_selected_goal(self, user_id: str) -> Goal:
+        """
+        Fetches the currently selected goal for a user.
+        """
+        # Check if the user exists
+        users = self.db.find("users", {"user_id": user_id})
+        if not users:
+            return None
+        # Check if the user has a selected goal
+        selected_goal_id = users[0].get("selected_goal")
+        if not selected_goal_id:
+            return None
+        # Fetch the goal details
+        goals = self.db.find("goals", {"_id": ObjectId(selected_goal_id)})
+        if not goals:
+            raise ValueError(
+                f"Selected goal {selected_goal_id} not found for user {user_id}."
+            )
+        return Goal(**goals[0])
