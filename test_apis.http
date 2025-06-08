@@ -41,10 +41,36 @@ Authorization: Bearer {{access_token}}
 
 @agentId = 1_dictionary
 ### Send a message to an agent
-POST {{base_url}}/agent/{{agentId}}/chat
+POST {{base_url}}/agents/{{agentId}}/chat
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
     "content": "Hello, agent!"
 }
+
+
+################## Goals Management
+
+### Get all goals
+GET {{base_url}}/goals
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Create a new goal
+POST {{base_url}}/goals
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "language": "English",
+    "level": "B2",
+    "context": "business",
+    "period": "months"
+}
+
+### Select a goal
+@goalId = 1
+POST {{base_url}}/goals/{{goalId}}/select
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

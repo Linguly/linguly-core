@@ -106,7 +106,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> UserInfo:
         if user_id is None:
             raise credentials_exception
         return UserInfo(
-            sub=user_id, email=payload.get("email"), name=payload.get("name")
+            user_id=user_id, email=payload.get("email"), name=payload.get("name")
         )
     except JWTError:
         raise credentials_exception

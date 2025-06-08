@@ -15,7 +15,7 @@ def read_agents():
     return agent_proxy.get_available_agents()
 
 
-@router.post("/agent/{agent_id}/chat", response_model=Message)
+@router.post("/agents/{agent_id}/chat", response_model=Message)
 def message_agent(
     agent_id: str,
     current_user: UserInfo = Depends(get_current_user),
