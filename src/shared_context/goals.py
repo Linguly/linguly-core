@@ -2,6 +2,7 @@ from src.shared_context.types import Goal, GoalInput
 from typing import List
 from src.db_proxy.db_proxy import get_db
 from datetime import datetime
+from bson import ObjectId
 
 
 class Goals:
@@ -23,6 +24,7 @@ class Goals:
         goals = self.db.find("goals", {"user_id": user_id})
         if not goals:
             return []
+        goals = [Goal(**goal) for goal in goals]
         return goals
 
     # create_goal(goal, current_user.user_id):
@@ -43,14 +45,35 @@ class Goals:
                 "updated_at": now,
             },
         )
-        return True
 
     def select_goal(self, goal_id: str, user_id: str) -> bool:
         """
         Activates a goal for a user.
-        This function is a placeholder and should be replaced with actual logic to activate a goal.
         """
-        # Placeholder implementation
-        # In a real application, you would update the goal's status in the database
-        print(f"Goal {goal_id} activated for user {user_id}.")
-        return True
+        # Check if the goal exists
+        try:
+            goal_obj_id = ObjectId(goal_id)
+        except Exception:
+            raise ValueError(f"Invalid goal_id: {goal_id}")
+        goals = self.db.find("goals", {"_id": goal_obj_id, "user_id": user_id})
+        if not goals:
+            print(f"Goal {goal_id} not found for user {user_id}.")
+            raise ValueError(f"Goal {goal_id} not found for user {user_id}.")
+        # Update the user's selected goal
+        users = self.db.find("users", {"user_id": user_id})
+        if not users:
+            self.db.insert(
+                "users",
+                {
+                    "user_id": user_id,
+                    "selected_goal": goal_id,
+                },
+            )
+            print(f"User {user_id} created with goal {goal_id}.")
+        else:
+            self.db.update(
+                "users",
+                {"user_id": user_id},
+                {"$set": {"selected_goal": goal_id}},
+            )
+            print(f"User {user_id} updated with selected goal {goal_id}.")

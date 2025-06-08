@@ -37,10 +37,13 @@ GET {{base_url}}/agents
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Agents
+### Get Agents filtered 
+GET {{base_url}}/agents/filter?subcategories=add_to_learning_phrases&compatible_interfaces=telegram
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
-@agentId = 1_dictionary
 ### Send a message to an agent
+@agentId = 1_dictionary
 POST {{base_url}}/agents/{{agentId}}/chat
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
@@ -70,7 +73,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Select a goal
-@goalId = 1
+@goalId = 6844a5ced421067ce832cb89
 POST {{base_url}}/goals/{{goalId}}/select
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

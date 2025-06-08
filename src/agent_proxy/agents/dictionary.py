@@ -50,9 +50,11 @@ class Dictionary(Agent):
     """
 
     type: str = "dictionary"  # Setting default value to the Agent's properties
-    category: List[str] = ["tool"]
-    interaction_type: List[str] = ["card"]
+    categories: List[str] = ["tool", "learning"]
+    subcategories: List[str] = ["dictionary", "add_to_learning_phrases"]
+    interaction_types: List[str] = ["card"]
     shared_context_field: str = "learning_phrases"
+    compatible_interfaces: List[str] = ["web", "telegram"]
     config: Configuration
 
     # temporary hard coded fields (will come from the user goals)

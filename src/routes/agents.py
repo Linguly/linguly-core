@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Body, Depends
-from typing import List
+from fastapi import APIRouter, HTTPException, status, Body, Depends, Query
+from typing import List, Optional
 from src.user.user_auth import validate_token, get_current_user
 from src.user.types import UserInfo
 from src.agent_proxy.types import Agent, Message
@@ -13,6 +13,37 @@ router = APIRouter()
 )
 def read_agents():
     return agent_proxy.get_available_agents()
+
+
+@router.get(
+    "/agents/filter",
+    response_model=List[Agent],
+    dependencies=[Depends(validate_token)],
+)
+def filter_agents(
+    subcategories: Optional[List[str]] = Query(
+        None, description="Filter by subcategories"
+    ),
+    compatible_interfaces: Optional[List[str]] = Query(
+        None, description="Filter by compatible interfaces"
+    ),
+):
+    agents = agent_proxy.get_available_agents()
+    if subcategories:
+        agents = [
+            a
+            for a in agents
+            if hasattr(a, "subcategories")
+            and set(subcategories).issubset(set(a.subcategories))
+        ]
+    if compatible_interfaces:
+        agents = [
+            a
+            for a in agents
+            if hasattr(a, "compatible_interfaces")
+            and set(compatible_interfaces).issubset(set(a.compatible_interfaces))
+        ]
+    return agents
 
 
 @router.post("/agents/{agent_id}/chat", response_model=Message)

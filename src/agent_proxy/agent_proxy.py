@@ -1,13 +1,15 @@
 from typing import List
-from src.agent_proxy.types import Message
+from src.agent_proxy.types import Message, Agent
 from src.agent_proxy.agents.dictionary import Dictionary
 
 
 # initialize agents (soon to be loaded from a yaml file/db)
 dictionary = Dictionary(
     id="1_dictionary",
-    display_name="dictionary_1",
+    display_name="Dictionary + add to learning phrases",
     model_connector_id="1_connector",
+    description="""This agent is to take a word or phrase and return a dictionary card showing a list of information.
+It always adds the phrase to the learning phrases list of the selected learning goal.""",
     config={
         "card_fields": [
             {
@@ -29,18 +31,21 @@ dictionary = Dictionary(
 available_agents = [dictionary]
 
 
-def get_available_agents():
+def get_available_agents() -> List[Agent]:
     agents_metadata = []
     for agent in available_agents:
         agents_metadata.append(
-            {
-                "id": agent.id,
-                "type": agent.type,
-                "display_name": agent.display_name,
-                "category": agent.category,
-                "interaction_type": agent.interaction_type,
-                "model_connector_id": agent.model_connector_id,
-            }
+            Agent(
+                id=agent.id,
+                type=agent.type,
+                display_name=agent.display_name,
+                categories=agent.categories,
+                subcategories=agent.subcategories,
+                description=agent.description,
+                interaction_types=agent.interaction_types,
+                model_connector_id=agent.model_connector_id,
+                compatible_interfaces=agent.compatible_interfaces,
+            )
         )
     return agents_metadata
 
