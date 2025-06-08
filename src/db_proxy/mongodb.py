@@ -71,3 +71,38 @@ class MongoDB(DB):
             )
         result = self.db[collection].insert_one(document)
         return str(result.inserted_id)
+
+    def update(self, collection: str, query: dict, update: dict) -> int:
+        """Update documents in a specified collection based on a query.
+        Args:
+            collection (str): The name of the collection to update.
+            query (dict): The query to filter documents to update.
+            update (dict): The update operation to apply.
+        Returns:
+            int: The number of documents updated.
+        Raises:
+            ValueError: If the collection does not exist in the database.
+        """
+        if collection not in self.collections:
+            raise ValueError(
+                f"Collection {collection} not found in database {self.db_name}"
+            )
+        result = self.db[collection].update_many(query, update)
+        return result.modified_count
+
+    def delete(self, collection: str, query: dict) -> int:
+        """Delete documents in a specified collection based on a query.
+        Args:
+            collection (str): The name of the collection to delete from.
+            query (dict): The query to filter documents to delete.
+        Returns:
+            int: The number of documents deleted.
+        Raises:
+            ValueError: If the collection does not exist in the database.
+        """
+        if collection not in self.collections:
+            raise ValueError(
+                f"Collection {collection} not found in database {self.db_name}"
+            )
+        result = self.db[collection].delete_many(query)
+        return result.deleted_count

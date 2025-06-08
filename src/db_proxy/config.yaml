@@ -9,3 +9,10 @@ databases:
     type: mongodb
     collections:
       - user_auth
+  - name: shared_context
+    connection: main_db
+    type: mongodb
+    collections:
+      - users
+      - goals
+      - learning_phrases
