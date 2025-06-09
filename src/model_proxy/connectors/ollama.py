@@ -3,6 +3,7 @@ from src.model_proxy.types import ModelConnector, Message
 from pydantic import BaseModel
 from typing import List
 from ollama import Client
+import os
 
 
 class Configuration(BaseModel):
@@ -10,13 +11,14 @@ class Configuration(BaseModel):
     Connector Configuration. Unique per instance.
     """
 
-    api_url: str
+    api_url_env_var: str
+    api_url: str = ""
 
 
-class BasicModel(ModelConnector):
+class Ollama(ModelConnector):
     """
-    This Connector is to connect to the basic models that will be hosted by Linguly.
-    Also known as the simple connector that can be connected to any open access hosted model with the minimalistic interactions.
+    This Connector is to connect to the ollama based models that will be hosted by Linguly.
+    It uses the ollama Python client to interact with the models.
     """
 
     type: str = "hosted_model"  # Setting default value to the Connector's properties
@@ -25,12 +27,11 @@ class BasicModel(ModelConnector):
     config: Configuration
 
     def __init__(self, **data):
-        # Modify the config structure
-        if "configuration" in data:
-            data["config"] = data["config"]
-
         # Call the parent class constructor with the modified data
         super().__init__(**data)
+
+        api_url_env_var = data.get("config", {}).get("api_url_env_var", None)
+        self.config.api_url = os.environ.get(api_url_env_var, "http://localhost:11434")
 
     def form_messages(self, user_prompt: str, system_prompt: str = "") -> List:
         messages = []

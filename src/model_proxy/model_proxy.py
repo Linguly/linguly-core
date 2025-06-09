@@ -1,40 +1,74 @@
 from typing import List
 from src.model_proxy.types import Message
-from src.model_proxy.connectors.basic_model import BasicModel
-import os
+from src.model_proxy.connectors.ollama import Ollama
+from src.model_proxy.connectors.openai import Openai
+import yaml
 
 
-# initialize connectors
-basic_model = BasicModel(
-    id="1_connector",
-    display_name="llama3.2_3B_linguly_live",
-    config={"api_url": os.environ.get("BASIC_MODEL_URL", "http://localhost:11434")},
-    model_name="llama3.2:3b",
-    supported_languages=[
-        "English",
-        "German",
-        "French",
-        "Italian",
-        "Portuguese",
-        "Hindi",
-        "Spanish",
-        "Thai",
-    ],
-)
+def load_config():
+    with open("src/model_proxy/config.yaml", "r") as file:
+        config = yaml.safe_load(file)
+    return config
+
+
+def init_connectors():
+    """
+    Initialize the model connectors based on the loaded configuration.
+
+    This function should be called to set up the model connectors
+    using the configuration loaded from the YAML file.
+    """
+    config = load_config()
+    available_connectors = []
+    for connector in config.get("model_connectors", []):
+        # Initialize each database connection here
+        connector_type = connector.get("type")
+        if connector_type == "ollama":
+            available_connectors.append(
+                Ollama(
+                    id=connector.get("id"),
+                    display_name=connector.get("display_name"),
+                    model_name=connector.get("model_name"),
+                    config=connector.get("config", {}),
+                    supported_languages=connector.get("supported_languages", []),
+                )
+            )
+        elif connector_type == "openai":
+            available_connectors.append(
+                Openai(
+                    id=connector.get("id"),
+                    display_name=connector.get("display_name"),
+                    model_name=connector.get("model_name"),
+                    config=connector.get("config", {}),
+                    supported_languages=connector.get("supported_languages", []),
+                )
+            )
+        else:
+            print(f"Unsupported model connector type: {connector_type}")
+    if not available_connectors:
+        print("No model connector available. Please check your configuration.")
+    return available_connectors
 
 
 def get_available_connectors():
-    return [
-        {
-            "id": "1_connector",
-            "type": "basic_model",
-            "display_name": "llama3.2_3B_linguly_live",
-        }
-    ]
+    return available_connectors
 
 
 def get_connector(connector_id: str):
-    return basic_model
+    """
+    Retrieve a model connector by its ID.
+
+    Args:
+        connector_id (str): The ID of the connector to retrieve.
+
+    Returns:
+        ModelConnector: The model connector instance.
+    """
+    for connector in available_connectors:
+        if connector.id == connector_id:
+            return connector
+    print(f"Model connector with id {connector_id} not found.")
+    return None
 
 
 def message_model(connector_id: str, messages: List[Message]):
@@ -42,4 +76,4 @@ def message_model(connector_id: str, messages: List[Message]):
     return model_connector.reply(messages)
 
 
-print(basic_model.config)
+available_connectors = init_connectors()

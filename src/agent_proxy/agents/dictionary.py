@@ -62,10 +62,6 @@ class Dictionary(Agent):
     base_language: str = "English"
 
     def __init__(self, **data):
-        # Modify the config structure
-        if "configuration" in data:
-            data["config"] = data["config"]
-
         # Call the parent class constructor with the modified data
         super().__init__(**data)
 

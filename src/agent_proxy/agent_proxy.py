@@ -7,7 +7,7 @@ from src.agent_proxy.agents.dictionary import Dictionary
 dictionary = Dictionary(
     id="1_dictionary",
     display_name="Dictionary + add to learning phrases",
-    model_connector_id="1_connector",
+    model_connector_id="basic_llama_connector",
     description="""This agent is to take a word or phrase and return a dictionary card showing a list of information.
 It always adds the phrase to the learning phrases list of the selected learning goal.""",
     config={
@@ -58,7 +58,9 @@ def get_agent(agent_id: str):
 
 
 def message_agent(agent_id: str, user_message: Message):
+    print(f"Message to agent {agent_id}: {user_message.content}")
     agent = get_agent(agent_id)
+    print(f"Using agent: {agent.display_name} ({agent.id})")
     return agent.reply(user_message)
 
 

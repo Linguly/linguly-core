@@ -1,0 +1,33 @@
+model_connectors:
+  - id: basic_llama_connector
+    type: ollama
+    display_name: "llama3.2_3B_linguly_live"
+    model_name: "llama3.2:3b"
+    config:
+      api_url_env_var: BASIC_MODEL_URL
+    supported_languages:
+      - English
+      - German
+      - French
+      - Italian
+      - Portuguese
+      - Hindi
+      - Spanish
+      - Thai
+
+  - id: openai
+    type: openai
+    display_name: "OpenAI GPT-4"
+    model_name: "gpt-4o"
+    config:
+      api_key_env_var: OPENAI_API_KEY
+    supported_languages:
+      - English
+      - German
+      - French
+      - Italian
+      - Portuguese
+      - Hindi
+      - Spanish
+      - Thai
+    
