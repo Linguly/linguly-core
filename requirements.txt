@@ -7,3 +7,4 @@ pyyaml
 argon2-cffi
 python-jose[cryptography]
 python-dotenv
+openai

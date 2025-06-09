@@ -37,6 +37,7 @@ To successfully running the app locally you need to create a `.env` file in the 
 
 ```t
 BASIC_MODEL_URL= # your ollama api url e.g. http://localhost:11434
+OPENAI_API_KEY= # your openAI API key if available
 MONGODB_MAIN_URL=  # use your mongodb atlas uri or a local one
 JWT_SECRET= # use a long and secure secret in production
 ```

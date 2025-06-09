@@ -1,4 +1,4 @@
-from src.db_proxy.db import DB
+from src.db_proxy.dbs.db import DB
 import pymongo
 import sys
 import os

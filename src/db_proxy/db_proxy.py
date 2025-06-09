@@ -1,5 +1,5 @@
 import yaml
-from src.db_proxy.mongodb import MongoDB
+from src.db_proxy.dbs.mongodb import MongoDB
 
 
 def load_config():

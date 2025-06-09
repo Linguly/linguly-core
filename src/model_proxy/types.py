@@ -2,6 +2,11 @@ from pydantic import BaseModel
 from typing import List
 
 
+class Message(BaseModel):
+    role: str
+    content: str
+
+
 class ModelConnector(BaseModel):
     """
     Agent metadata to return based on available agents
@@ -15,7 +20,5 @@ class ModelConnector(BaseModel):
     interaction_type: List[str]
     supported_languages: List[str]
 
-
-class Message(BaseModel):
-    role: str
-    content: str
+    def reply(self, messages: List[Message]) -> str:
+        pass

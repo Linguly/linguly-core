@@ -66,4 +66,5 @@ def message_agent(
     try:
         return agent_proxy.message_agent(agent_id=agent_id, user_message=user_message)
     except ValueError as e:
+        print(f"Error messaging agent: {e}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
