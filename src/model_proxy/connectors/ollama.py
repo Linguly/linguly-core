@@ -32,6 +32,7 @@ class Ollama(ModelConnector):
 
         api_url_env_var = data.get("config", {}).get("api_url_env_var", None)
         self.config.api_url = os.environ.get(api_url_env_var, "http://localhost:11434")
+        print(f"Using Ollama API URL: {self.config.api_url}")
 
     def form_messages(self, user_prompt: str, system_prompt: str = "") -> List:
         messages = []
