@@ -10,7 +10,7 @@ from src.user.types import UserInfo
 # Secret key & algorithm
 SECRET_KEY = os.getenv("JWT_SECRET")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 1000
+ACCESS_TOKEN_EXPIRE_MINUTES = 40000
 
 # Tell FastAPI where tokens will come from (Authorization header)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")

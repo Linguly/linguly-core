@@ -39,7 +39,9 @@ phrase= {user_message}
     
 # outputs
 {{
-{self.card_fields_str(card_fields).replace("to_learn_language", to_learn_language).replace("base_language", base_language)}
+{self.card_fields_str(card_fields).replace("to_learn_language", to_learn_language)
+.replace("base_language", base_language)
+.replace("the_phrase", user_message)}
 }}
 """
 
@@ -71,7 +73,6 @@ class Dictionary(Agent):
 
     # Asking for a json output and then formatting it here can help us receiving more reliable output format from the model
     def format_output(self, output_str: str) -> str:
-        print(output_str)
         try:
             output_json = json.loads(output_str)
             formatted_output = "\n".join(

@@ -1,34 +1,42 @@
 from typing import List
 from src.agent_proxy.types import Message, Agent
 from src.agent_proxy.agents.dictionary import Dictionary
+import yaml
 
 
-# initialize agents (soon to be loaded from a yaml file/db)
-dictionary = Dictionary(
-    id="1_dictionary",
-    display_name="Dictionary + add to learning phrases",
-    model_connector_id="basic_llama_connector",
-    description="""This agent is to take a word or phrase and return a dictionary card showing a list of information.
-It always adds the phrase to the learning phrases list of the selected learning goal.""",
-    config={
-        "card_fields": [
-            {
-                "name": "Translation",
-                "description": "translate the phrase into base_language",
-            },
-            {"name": "Synonyms", "description": "few synonyms in to_learn_language"},
-            {
-                "name": "Example",
-                "description": "at least two sentences using the phrase in to_learn_language",
-            },
-            {
-                "name": "Definition",
-                "description": "definition of the phrase in to_learn_language",
-            },
-        ]
-    },
-)
-available_agents = [dictionary]
+def load_config():
+    with open("src/agent_proxy/config.yaml", "r") as file:
+        config = yaml.safe_load(file)
+    return config
+
+
+def init_agents():
+    """
+    Initialize the agents based on the loaded configuration.
+
+    This function should be called to set up the agents
+    using the configuration loaded from the YAML file.
+    """
+    config = load_config()
+    available_agents = []
+    for agent in config.get("agents", []):
+        # Initialize each agent here
+        agent_type = agent.get("type")
+        if agent_type == "dictionary":
+            available_agents.append(
+                Dictionary(
+                    id=agent.get("id"),
+                    display_name=agent.get("display_name"),
+                    model_connector_id=agent.get("model_connector_id"),
+                    description=agent.get("description"),
+                    config=agent.get("config", {}),
+                )
+            )
+        else:
+            print(f"Unsupported agent type: {agent_type}")
+    if not available_agents:
+        print("No agent available. Please check your configuration.")
+    return available_agents
 
 
 def get_available_agents() -> List[Agent]:
@@ -64,4 +72,4 @@ def message_agent(agent_id: str, user_message: Message):
     return agent.reply(user_message)
 
 
-# print(message_agent("1_dictionary", Message(content="ausrede", role="user")))
+available_agents = init_agents()
