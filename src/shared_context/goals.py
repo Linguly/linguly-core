@@ -14,7 +14,7 @@ class Goals:
         self.db = get_db("shared_context")
         if not self.db:
             raise ValueError(
-                "Database connection not found. Please check your configuration."
+                "Database connection for shared_context not found. Please check your configuration."
             )
 
     def get_goals(self, user_id: str) -> List[Goal]:
@@ -27,7 +27,6 @@ class Goals:
         goals = [Goal(**goal) for goal in goals]
         return goals
 
-    # create_goal(goal, current_user.user_id):
     def create_goal(self, goal: GoalInput, user_id: str) -> Goal:
         """
         Creates a new goal for a user.

@@ -30,11 +30,13 @@ class LearningPhrases(BaseModel):
     user_id: str
     goal_id: str
     phrase: str
-    used_count: int = 0
-    success_count: int = 0
+    used_count: int = 0  # Number of retrieves from agents
+    tested_count: int = 0  # Number of test/feedback records
+    success_count: int = 0  # Number of successes in tests/feedbacks
     success_record: list[bool] = (
         []
-    )  # List of boolean values indicating success for each use
+    )  # List of boolean values indicating success for each test/feedback record
     success_record_date: list[str] = []  # List of ISO 8601 date strings for each try
+    last_used_date: str
     source_id: str  # e.g., "agent_id", "package_id"
     source_type: str  # e.g., "agent", "package"

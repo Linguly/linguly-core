@@ -9,16 +9,16 @@ router = APIRouter()
 
 
 @router.get(
-    "/agents", response_model=List[Agent], dependencies=[Depends(validate_token)]
+    "/agents",
+    response_model=List[Agent],
 )
-def read_agents():
-    return agent_proxy.get_available_agents()
+def read_agents(current_user: UserInfo = Depends(get_current_user)):
+    return agent_proxy.get_available_agents(user_id=current_user.user_id)
 
 
 @router.get(
     "/agents/filter",
     response_model=List[Agent],
-    dependencies=[Depends(validate_token)],
 )
 def filter_agents(
     categories: Optional[List[str]] = Query(None, description="Filter by categories"),
@@ -28,8 +28,9 @@ def filter_agents(
     compatible_interfaces: Optional[List[str]] = Query(
         None, description="Filter by compatible interfaces"
     ),
+    current_user: UserInfo = Depends(get_current_user),
 ):
-    agents = agent_proxy.get_available_agents()
+    agents = agent_proxy.get_available_agents(user_id=current_user.user_id)
     if categories:
         agents = [
             a
@@ -64,7 +65,9 @@ def message_agent(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid message format"
         )
     try:
-        return agent_proxy.message_agent(agent_id=agent_id, user_message=user_message)
+        return agent_proxy.message_agent(
+            agent_id=agent_id, user_id=current_user.user_id, user_message=user_message
+        )
     except ValueError as e:
         print(f"Error messaging agent: {e}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))

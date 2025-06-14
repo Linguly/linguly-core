@@ -1,9 +1,12 @@
 from src.agent_proxy.types import Agent, Message
 from src.model_proxy import model_proxy
+from src.shared_context.types import Goal
+from src.shared_context.learning_phrases import LearningPhrases
 from pydantic import BaseModel, Field
 from typing import List
 import json
 
+learning_phrases = LearningPhrases()
 
 class CardField(BaseModel):
     name: str = Field(..., description="Field Name")
@@ -18,32 +21,20 @@ class Configuration(BaseModel):
     card_fields: List[CardField]
 
 
-class Prompt:
-    def card_fields_str(card_fields: List[CardField]):
-        return "\n".join(
-            [f'"{field.name}": "{field.description}", ' for field in card_fields]
-        )
+class Prompt(BaseModel):
+    def card_fields_str(self, card_fields: List[CardField]):
+        return "\n".join([f"- {field.description}" for field in card_fields])
 
     def user(
         self,
-        to_learn_language: str,
-        base_language: str,
+        learning_language: str,
         card_fields: List[CardField],
         user_message: str,
     ):
-        return f"""You are a dictionary and give me the following output fields based on the given inputs.
-The output should be in json format with no additional text and information:
-    
-# inputs
-phrase= {user_message}
-    
-# outputs
-{{
-{self.card_fields_str(card_fields).replace("to_learn_language", to_learn_language)
-.replace("base_language", base_language)
-.replace("the_phrase", user_message)}
-}}
-"""
+        return (
+            f"Give me the requested information in {learning_language} with a super short and direct answer:\n"
+            f"{self.card_fields_str(card_fields).replace('learning_language', learning_language).replace('the_phrase', user_message)}"
+        )
 
 
 class Dictionary(Agent):
@@ -54,48 +45,36 @@ class Dictionary(Agent):
     type: str = "dictionary"  # Setting default value to the Agent's properties
     categories: List[str] = ["tool", "learning"]
     subcategories: List[str] = ["dictionary", "add_to_learning_phrases"]
-    interaction_types: List[str] = ["card"]
+    interaction_types: List[str] = ["text"]
     shared_context_field: str = "learning_phrases"
     compatible_interfaces: List[str] = ["web", "telegram"]
     config: Configuration
-
-    # temporary hard coded fields (will come from the user goals)
-    to_learn_language: str = "German"
-    base_language: str = "English"
+    prompt: Prompt = Prompt()
 
     def __init__(self, **data):
         # Call the parent class constructor with the modified data
         super().__init__(**data)
+        
+    def add_to_learning_phrases(self, phrase: str, user_id: str, goal_id: str):
+        learning_phrases.add_to_learning_phrases([phrase], user_id, goal_id, source_id=self.id, source_type='agent')
+        
 
     @property
     def model_connector(self):
         return model_proxy.get_connector(self.model_connector_id)
 
-    # Asking for a json output and then formatting it here can help us receiving more reliable output format from the model
-    def format_output(self, output_str: str) -> str:
-        try:
-            output_json = json.loads(output_str)
-            formatted_output = "\n".join(
-                f"{key}: {value}" for key, value in output_json.items()
-            )
-        except json.JSONDecodeError as e:
-            formatted_output = (
-                "Invalid response from the model. Please try again! \n Model response: \n"
-                + output_str
-            )
-        return formatted_output
-
-    def reply(self, user_message: Message) -> List[Message]:
-        user_message = Message(
-            content=Prompt.user(
-                Prompt,
-                self.to_learn_language,
-                self.base_language,
+    def reply(
+        self, user_id: str, user_message: Message, user_goal: Goal
+    ) -> List[Message]:
+        self.add_to_learning_phrases(user_id, user_goal.id, user_message.content)
+        learning_language = user_goal.language
+        dictionary_user_message = Message(
+            content=self.prompt.user(
+                learning_language,
                 self.config.card_fields,
                 user_message.content,
             ),
             role="user",
         )
-        model_response = self.model_connector.reply(messages=[user_message])
-        model_response.content = self.format_output(model_response.content)
-        return model_response
+        model_response = self.model_connector.reply(messages=[dictionary_user_message])
+        return user_message

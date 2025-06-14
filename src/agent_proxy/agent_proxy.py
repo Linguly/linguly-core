@@ -1,13 +1,22 @@
 from typing import List
 from src.agent_proxy.types import Message, Agent
+from src.model_proxy import model_proxy
 from src.agent_proxy.agents.dictionary import Dictionary
+from src.shared_context.goals import Goals
 import yaml
+
+goals = Goals()
 
 
 def load_config():
     with open("src/agent_proxy/config.yaml", "r") as file:
         config = yaml.safe_load(file)
     return config
+
+
+def get_model_supported_languages(model_connector_id: str):
+    model_connector = model_proxy.get_connector(model_connector_id)
+    return model_connector.supported_languages
 
 
 def init_agents():
@@ -30,6 +39,9 @@ def init_agents():
                     model_connector_id=agent.get("model_connector_id"),
                     description=agent.get("description"),
                     config=agent.get("config", {}),
+                    supported_languages=get_model_supported_languages(
+                        agent.get("model_connector_id")
+                    ),
                 )
             )
         else:
@@ -39,22 +51,26 @@ def init_agents():
     return available_agents
 
 
-def get_available_agents() -> List[Agent]:
+def get_available_agents(user_id: str) -> List[Agent]:
+    user_goal = goals.get_selected_goal(user_id)
     agents_metadata = []
     for agent in available_agents:
-        agents_metadata.append(
-            Agent(
-                id=agent.id,
-                type=agent.type,
-                display_name=agent.display_name,
-                categories=agent.categories,
-                subcategories=agent.subcategories,
-                description=agent.description,
-                interaction_types=agent.interaction_types,
-                model_connector_id=agent.model_connector_id,
-                compatible_interfaces=agent.compatible_interfaces,
+        # Include only agents that their supported languages is including user's goal
+        if user_goal.language in agent.supported_languages:
+            agents_metadata.append(
+                Agent(
+                    id=agent.id,
+                    type=agent.type,
+                    display_name=agent.display_name,
+                    categories=agent.categories,
+                    subcategories=agent.subcategories,
+                    description=agent.description,
+                    interaction_types=agent.interaction_types,
+                    model_connector_id=agent.model_connector_id,
+                    compatible_interfaces=agent.compatible_interfaces,
+                    supported_languages=agent.supported_languages,
+                )
             )
-        )
     return agents_metadata
 
 
@@ -65,11 +81,11 @@ def get_agent(agent_id: str):
     raise ValueError(f"Agent with id {agent_id} not found")
 
 
-def message_agent(agent_id: str, user_message: Message):
-    print(f"Message to agent {agent_id}: {user_message.content}")
+def message_agent(agent_id: str, user_id: str, user_message: Message):
     agent = get_agent(agent_id)
     print(f"Using agent: {agent.display_name} ({agent.id})")
-    return agent.reply(user_message)
+    user_goal = goals.get_selected_goal(user_id)
+    return agent.reply(user_id, user_message, user_goal)
 
 
 available_agents = init_agents()
