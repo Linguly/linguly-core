@@ -66,11 +66,11 @@ class Dictionary(Agent):
     def reply(
         self, user_id: str, user_message: Message, user_goal: Goal
     ) -> List[Message]:
-        self.add_to_learning_phrases(user_message.content, user_id, user_goal)
+        self.add_to_learning_phrases(user_id, user_goal.id, user_message.content)
         learning_language = user_goal.language
         dictionary_user_message = Message(
             content=self.prompt.user(
-                self.learning_language,
+                learning_language,
                 self.config.card_fields,
                 user_message.content,
             ),

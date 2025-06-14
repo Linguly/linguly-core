@@ -55,3 +55,31 @@ agents:
       card_fields: 
         - name: Definition
           description: definition of the_phrase
+
+  - id: dictionary_4
+    type: dictionary
+    display_name: "Dictionary: Synonyms, Example, Definition + more"
+    model_connector_id: basic_llama_connector
+    description: |
+      📚 This agent is to take a word or phrase and return a list of information:
+        - Synonyms
+        - Example
+        - Definition
+        - Verb forms
+        - Article
+
+      It always adds the phrase to the learning phrases list of the selected learning goal
+
+      🤖 Powered by self-hosted Llama3.2 3B model
+    config:
+      card_fields: 
+        - name: Synonyms
+          description: few synonyms of the_phrase
+        - name: Example
+          description: example sentence using the_phrase
+        - name: Definition
+          description: definition of the_phrase
+        - name: Article
+          description: if the_phrase is a noun, write the Article
+        - name: Verb forms
+          descriptionL: if the_phrase is a verb, write the standard verb forms

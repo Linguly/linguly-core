@@ -85,7 +85,7 @@ def message_agent(agent_id: str, user_id: str, user_message: Message):
     agent = get_agent(agent_id)
     print(f"Using agent: {agent.display_name} ({agent.id})")
     user_goal = goals.get_selected_goal(user_id)
-    return agent.reply(user_id, user_message, user_goal.id)
+    return agent.reply(user_id, user_message, user_goal)
 
 
 available_agents = init_agents()
