@@ -77,4 +77,4 @@ class Dictionary(Agent):
             role="user",
         )
         model_response = self.model_connector.reply(messages=[dictionary_user_message])
-        return user_message
+        return model_response
