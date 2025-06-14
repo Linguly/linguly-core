@@ -71,9 +71,4 @@ def get_connector(connector_id: str):
     return None
 
 
-def message_model(connector_id: str, messages: List[Message]):
-    model_connector = get_connector(connector_id)
-    return model_connector.reply(messages)
-
-
 available_connectors = init_connectors()

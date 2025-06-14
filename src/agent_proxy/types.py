@@ -20,6 +20,9 @@ class Agent(BaseModel):
     interaction_types: List[str]  # Can be: chat, voice, card
     model_connector_id: str  # Connector ID used to connect to the model, e.g. 'openai_1', 'ollama_2', etc.
     compatible_interfaces: List[str]  # Can be: telegram, web, etc.
+    supported_languages: List[
+        str
+    ]  # list of supported languages based on the connected model
 
 
 class Message(BaseModel):

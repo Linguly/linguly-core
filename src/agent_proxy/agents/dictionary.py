@@ -1,5 +1,6 @@
 from src.agent_proxy.types import Agent, Message
 from src.model_proxy import model_proxy
+from src.shared_context.types import Goal
 from pydantic import BaseModel, Field
 from typing import List
 import json
@@ -46,10 +47,6 @@ class Dictionary(Agent):
     shared_context_field: str = "learning_phrases"
     compatible_interfaces: List[str] = ["web", "telegram"]
     config: Configuration
-
-    # temporary hard coded fields (will come from the user goals)
-    learning_language: str = "German"
-
     prompt: Prompt = Prompt()
 
     def __init__(self, **data):
@@ -60,8 +57,11 @@ class Dictionary(Agent):
     def model_connector(self):
         return model_proxy.get_connector(self.model_connector_id)
 
-    def reply(self, user_message: Message) -> List[Message]:
-        user_message = Message(
+    def reply(
+        self, user_id: str, user_message: Message, user_goal: Goal
+    ) -> List[Message]:
+        learning_language = user_goal.language
+        dictionary_user_message = Message(
             content=self.prompt.user(
                 self.learning_language,
                 self.config.card_fields,
@@ -69,5 +69,5 @@ class Dictionary(Agent):
             ),
             role="user",
         )
-        model_response = self.model_connector.reply(messages=[user_message])
+        model_response = self.model_connector.reply(messages=[dictionary_user_message])
         return user_message
