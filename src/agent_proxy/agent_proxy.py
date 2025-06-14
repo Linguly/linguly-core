@@ -66,7 +66,6 @@ def get_agent(agent_id: str):
 
 
 def message_agent(agent_id: str, user_message: Message):
-    print(f"Message to agent {agent_id}: {user_message.content}")
     agent = get_agent(agent_id)
     print(f"Using agent: {agent.display_name} ({agent.id})")
     return agent.reply(user_message)

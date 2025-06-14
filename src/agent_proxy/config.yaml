@@ -1,10 +1,10 @@
 agents:
   - id: dictionary_1
     type: dictionary
-    display_name: "Dictionary + add to learning phrases"
+    display_name: "Dictionary: Synonyms, Example, Definition"
     model_connector_id: basic_llama_connector
     description: |
-      📚 This agent is to take a word or phrase and return a dictionary card showing a list of information:
+      📚 This agent is to take a word or phrase and return a list of information:
         - Synonyms
         - Example
         - Definition
@@ -23,33 +23,35 @@ agents:
 
   - id: dictionary_2
     type: dictionary
-    display_name: "Simple Dictionary + add to learning phrases"
+    display_name: "Dictionary: Example, Definition"
     model_connector_id: basic_llama_connector
     description: |
-      📚 This agent is to take a word or phrase and return a dictionary card showing a list of information:
-        - Synonyms
+      📚 This agent is to take a word or phrase and return a list of information:
+        - Example
+        - Definition
         
       It always adds the phrase to the learning phrases list of the selected learning goal
 
       🤖 Powered by self-hosted Llama3.2 3B model
     config:
       card_fields: 
-        - name: Synonyms
-          description: few synonyms of the_phrase
-
+        - name: Example
+          description: example sentence using the_phrase
+        - name: Definition
+          description: definition of the_phrase
 
   - id: dictionary_3
     type: dictionary
-    display_name: "Simple Fast Dictionary + add to learning phrases"
-    model_connector_id: basic_llama_1b_connector
+    display_name: "Dictionary: Definition"
+    model_connector_id: basic_llama_connector
     description: |
-      📚 This agent is to take a word or phrase and return a dictionary card showing a list of information:
-        - Synonyms
+      📚 This agent is to take a word or phrase and return a list of information:
+        - Definition
         
       It always adds the phrase to the learning phrases list of the selected learning goal
 
       🤖 Powered by self-hosted Llama3.2 1B model
     config:
       card_fields: 
-        - name: Synonyms
-          description: few synonyms of the_phrase
+        - name: Definition
+          description: definition of the_phrase
