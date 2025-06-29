@@ -38,5 +38,29 @@ agents:
       🤖 Powered by self-hosted Llama3.2 3B model
     config:
       prompt: |
-        Give me a short dialogue using ${the_phrase} in ${learning_language}
+        Give me a short dialogue using "${the_phrase}" only in ${learning_language}. With no additional information around it.
 
+
+  - id: masking_1
+    type: masking
+    display_name: "Masking: Short dialogue + level & context"
+    model_connector_id: basic_llama_connector
+    description: |
+      📚 This agent is a learning agent providing short dialogues using the phrases you are learning
+        
+      It always load the least used phrase based on your learning goal's associated learning phrases.
+      Your responses will be recorded and affect how often you will see this phrase later.
+
+      This agent consider your level and context based on the goal definition.
+
+      *How To:* 
+         - Try to guess the blank (`______`) by typing the phrase and send it to the agent.
+         - Then agent will respond with the correct answer.
+
+      *Disclaimer:*
+      Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
+
+      🤖 Powered by self-hosted Llama3.2 3B model
+    config:
+      prompt: |
+        Give me a short dialogue using "${the_phrase}" only in ${learning_language}. With no additional information around it. Use words in ${learning_level} level and ${learning_context} context.
