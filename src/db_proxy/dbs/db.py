@@ -10,7 +10,7 @@ class DB:
         # Placeholder for database disconnection logic
         print(f"Disconnecting from database: {self.db_name}")
 
-    def find(self, collection: str, query: dict):
+    def find(self, collection: str, query: dict, sort: list = None, limit: int = None):
         pass
 
     def insert(self, collection: str, document: dict):

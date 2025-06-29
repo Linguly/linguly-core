@@ -21,7 +21,7 @@ class Ollama(ModelConnector):
     It uses the ollama Python client to interact with the models.
     """
 
-    type: str = "hosted_model"  # Setting default value to the Connector's properties
+    type: str = "ollama"  # Setting default value to the Connector's properties
     category: List[str] = ["language_model"]
     interaction_type: List[str] = ["text"]
     config: Configuration

@@ -59,7 +59,7 @@ class Goals:
             print(f"Goal {goal_id} not found for user {user_id}.")
             raise ValueError(f"Goal {goal_id} not found for user {user_id}.")
         # Update the user's selected goal
-        users = self.db.find("users", {"user_id": user_id})
+        users = self.db.find("users", {"user_id": user_id}, limit=1)
         if not users:
             self.db.insert(
                 "users",
@@ -82,7 +82,7 @@ class Goals:
         Fetches the currently selected goal for a user.
         """
         # Check if the user exists
-        users = self.db.find("users", {"user_id": user_id})
+        users = self.db.find("users", {"user_id": user_id}, limit=1)
         if not users:
             return None
         # Check if the user has a selected goal

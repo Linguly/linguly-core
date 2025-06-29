@@ -2,6 +2,7 @@ from typing import List
 from src.agent_proxy.types import Message, Agent
 from src.model_proxy import model_proxy
 from src.agent_proxy.agents.dictionary import Dictionary
+from src.agent_proxy.agents.masking import Masking
 from src.shared_context.goals import Goals
 import yaml
 
@@ -34,6 +35,19 @@ def init_agents():
         if agent_type == "dictionary":
             available_agents.append(
                 Dictionary(
+                    id=agent.get("id"),
+                    display_name=agent.get("display_name"),
+                    model_connector_id=agent.get("model_connector_id"),
+                    description=agent.get("description"),
+                    config=agent.get("config", {}),
+                    supported_languages=get_model_supported_languages(
+                        agent.get("model_connector_id")
+                    ),
+                )
+            )
+        elif agent_type == "masking":
+            available_agents.append(
+                Masking(
                     id=agent.get("id"),
                     display_name=agent.get("display_name"),
                     model_connector_id=agent.get("model_connector_id"),
@@ -81,11 +95,20 @@ def get_agent(agent_id: str):
     raise ValueError(f"Agent with id {agent_id} not found")
 
 
-def message_agent(agent_id: str, user_id: str, user_message: Message):
+def start_the_agent(agent_id: str, user_id: str) -> List[Message]:
     agent = get_agent(agent_id)
-    print(f"Using agent: {agent.display_name} ({agent.id})")
+    print(f"Start agent: {agent.display_name} ({agent.id})")
     user_goal = goals.get_selected_goal(user_id)
-    return agent.reply(user_id, user_message, user_goal)
+    return agent.start(user_id, user_goal)
+
+
+def chat_with_agent(
+    agent_id: str, user_id: str, messages: List[Message]
+) -> List[Message]:
+    agent = get_agent(agent_id)
+    print(f"Chat with agent: {agent.display_name} ({agent.id})")
+    user_goal = goals.get_selected_goal(user_id)
+    return agent.reply(user_id, user_goal, messages)
 
 
 available_agents = init_agents()

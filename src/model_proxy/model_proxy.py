@@ -1,8 +1,10 @@
 from typing import List
 from src.model_proxy.types import Message
+from src.model_proxy.connectors.echo import Echo
 from src.model_proxy.connectors.ollama import Ollama
 from src.model_proxy.connectors.openai import Openai
 import yaml
+import os
 
 
 def load_config():
@@ -23,7 +25,16 @@ def init_connectors():
     for connector in config.get("model_connectors", []):
         # Initialize each database connection here
         connector_type = connector.get("type")
-        if connector_type == "ollama":
+        if connector_type == "echo":
+            available_connectors.append(
+                Echo(
+                    id=connector.get("id"),
+                    display_name=connector.get("display_name"),
+                    model_name=connector.get("model_name"),
+                    supported_languages=connector.get("supported_languages", []),
+                )
+            )
+        elif connector_type == "ollama":
             available_connectors.append(
                 Ollama(
                     id=connector.get("id"),
@@ -64,6 +75,12 @@ def get_connector(connector_id: str):
     Returns:
         ModelConnector: The model connector instance.
     """
+    # Always echo the input if echo mode is enabled to reduce cost and complexity when testing
+    echo_mode = os.environ.get("ECHO_MODEL_ENABLED", "false")
+    if echo_mode == "true":
+        connector_id = "echo"
+
+    # Find and return the selected connector
     for connector in available_connectors:
         if connector.id == connector_id:
             return connector
