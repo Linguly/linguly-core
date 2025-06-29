@@ -32,9 +32,14 @@ class Prompt(BaseModel):
         card_fields: List[CardField],
         user_message: str,
     ):
+        card_fields_str = (
+            self.card_fields_str(card_fields)
+            .replace("${learning_language}", learning_language)
+            .replace("${the_phrase}", user_message)
+        )
         return (
             f"Give me the requested information in {learning_language} with a super short and direct answer:\n"
-            f"{self.card_fields_str(card_fields).replace('${{learning_language}}', learning_language).replace('${{the_phrase}}', user_message)}"
+            f"{card_fields_str}"
         )
 
 

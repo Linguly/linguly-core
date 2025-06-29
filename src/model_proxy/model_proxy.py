@@ -76,8 +76,8 @@ def get_connector(connector_id: str):
         ModelConnector: The model connector instance.
     """
     # Always echo the input if echo mode is enabled to reduce cost and complexity when testing
-    echo_mode = os.environ.get("ECHO_MODEL_ENABLED", 'false')
-    if echo_mode == 'true':
+    echo_mode = os.environ.get("ECHO_MODEL_ENABLED", "false")
+    if echo_mode == "true":
         connector_id = "echo"
 
     # Find and return the selected connector
