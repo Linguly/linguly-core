@@ -1,10 +1,8 @@
 model_connectors:
-  - id: basic_llama_connector
-    type: ollama
-    display_name: "llama3.2_3B_linguly_live"
-    model_name: "llama3.2:3b"
-    config:
-      api_url_env_var: BASIC_MODEL_URL
+  - id: echo
+    type: echo
+    display_name: "Echo"
+    model_name: "echo"
     supported_languages:
       - English
       - German
@@ -14,11 +12,11 @@ model_connectors:
       - Hindi
       - Spanish
       - Thai
-      
-  - id: basic_llama_1b_connector
+
+  - id: basic_llama_connector
     type: ollama
-    display_name: "llama3.2_1B_linguly_live"
-    model_name: "llama3.2:1b"
+    display_name: "llama3.2_3B_linguly_live"
+    model_name: "llama3.2:3b"
     config:
       api_url_env_var: BASIC_MODEL_URL
     supported_languages:

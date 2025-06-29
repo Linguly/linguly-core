@@ -56,6 +56,15 @@ uvicorn src.main:app --reload --port 3001
 
 - open the API documentation: [http://localhost:3001/docs](http://localhost:3001/docs)
 
+
+## Disable connectors when testing
+
+In order to reduce cost and complexity while testing, we can disable all connectors and use the echo model instead.
+For that just add the following to your `.env` file.
+```
+ECHO_MODEL_ENABLED=true
+```
+
 ## Formatting
 
 - to install `pip install black`
