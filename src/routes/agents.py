@@ -64,7 +64,7 @@ def start_the_agent(
             agent_id=agent_id, user_id=current_user.user_id
         )
     except ValueError as e:
-        print(f"Error messaging agent: {e}")
+        print(f"Error starting the agent: {e}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
 

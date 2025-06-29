@@ -28,9 +28,12 @@ agents:
       It always load the least used phrase based on your learning goal's associated learning phrases.
       Your responses will be recorded and affect how often you will see this phrase later.
 
-      Try to guess the blank (____) by typing the phrase and send it to the agent.
-      Then agent will respond with the correct answer.
-      Disclaimer: Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
+      *How To:* 
+         - Try to guess the blank (`______`) by typing the phrase and send it to the agent.
+         - Then agent will respond with the correct answer.
+
+      *Disclaimer:*
+      Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
 
       🤖 Powered by self-hosted Llama3.2 3B model
     config:

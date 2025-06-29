@@ -61,9 +61,9 @@ class Dictionary(Agent):
         # Call the parent class constructor with the modified data
         super().__init__(**data)
 
-    def add_to_learning_phrases(self, phrase: str, user_id: str, goal_id: str):
+    def add_to_learning_phrases(self, user_id: str, goal_id: str, phrase: str):
         learning_phrases.add_to_learning_phrases(
-            [phrase], user_id, goal_id, source_id=self.id, source_type="agent"
+            user_id, goal_id, [phrase], source_id=self.id, source_type="agent"
         )
 
     @property
@@ -78,10 +78,9 @@ class Dictionary(Agent):
     ) -> List[Message]:
         user_message = messages[0]
         self.add_to_learning_phrases(user_id, user_goal.id, user_message.content)
-        learning_language = user_goal.language
         dictionary_user_message = Message(
             content=self.prompt.user(
-                learning_language,
+                user_goal.language,
                 self.config.card_fields,
                 user_message.content,
             ),
