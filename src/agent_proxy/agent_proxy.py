@@ -81,11 +81,20 @@ def get_agent(agent_id: str):
     raise ValueError(f"Agent with id {agent_id} not found")
 
 
-def message_agent(agent_id: str, user_id: str, user_message: Message):
+def start_the_agent(agent_id: str, user_id: str) -> List[Message]:
     agent = get_agent(agent_id)
-    print(f"Using agent: {agent.display_name} ({agent.id})")
+    print(f"Start agent: {agent.display_name} ({agent.id})")
     user_goal = goals.get_selected_goal(user_id)
-    return agent.reply(user_id, user_message, user_goal)
+    return agent.start(user_id, user_goal)
+
+
+def chat_with_agent(
+    agent_id: str, user_id: str, messages: List[Message]
+) -> List[Message]:
+    agent = get_agent(agent_id)
+    print(f"Chat with agent: {agent.display_name} ({agent.id})")
+    user_goal = goals.get_selected_goal(user_id)
+    return agent.reply(user_id, user_goal, messages)
 
 
 available_agents = init_agents()

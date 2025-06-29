@@ -2,6 +2,11 @@ from pydantic import BaseModel
 from typing import List
 
 
+class Message(BaseModel):
+    role: str = "user"  # Default role is 'user'
+    content: str
+
+
 class Agent(BaseModel):
     """
     Agent metadata to return based on available agents
@@ -24,7 +29,8 @@ class Agent(BaseModel):
         str
     ]  # list of supported languages based on the connected model
 
+    def start(user_id: str, goal_id: str) -> List[Message]:
+        pass
 
-class Message(BaseModel):
-    role: str = "user"  # Default role is 'user'
-    content: str
+    def reply(user_id: str, goal_id: str, messages: List[Message]) -> List[Message]:
+        pass

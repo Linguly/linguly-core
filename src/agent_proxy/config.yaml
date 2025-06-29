@@ -1,28 +1,6 @@
 agents:
   - id: dictionary_1
     type: dictionary
-    display_name: "Dictionary: Synonyms, Example, Definition"
-    model_connector_id: basic_llama_connector
-    description: |
-      📚 This agent is to take a word or phrase and return a list of information:
-        - Synonyms
-        - Example
-        - Definition
-
-      It always adds the phrase to the learning phrases list of the selected learning goal
-
-      🤖 Powered by self-hosted Llama3.2 3B model
-    config:
-      card_fields: 
-        - name: Synonyms
-          description: few synonyms of the_phrase
-        - name: Example
-          description: example sentence using the_phrase
-        - name: Definition
-          description: definition of the_phrase
-
-  - id: dictionary_2
-    type: dictionary
     display_name: "Dictionary: Example, Definition"
     model_connector_id: basic_llama_connector
     description: |
@@ -36,50 +14,26 @@ agents:
     config:
       card_fields: 
         - name: Example
-          description: example sentence using the_phrase
+          description: example sentence using ${the_phrase}
         - name: Definition
-          description: definition of the_phrase
+          description: definition of ${the_phrase}
 
-  - id: dictionary_3
-    type: dictionary
-    display_name: "Dictionary: Definition"
+  - id: masking_1
+    type: masking
+    display_name: "Masking: Short dialogue"
     model_connector_id: basic_llama_connector
     description: |
-      📚 This agent is to take a word or phrase and return a list of information:
-        - Definition
+      📚 This agent is a learning agent providing short dialogues using the phrases you are learning
         
-      It always adds the phrase to the learning phrases list of the selected learning goal
+      It always load the least used phrase based on your learning goal's associated learning phrases.
+      Your responses will be recorded and affect how often you will see this phrase later.
 
-      🤖 Powered by self-hosted Llama3.2 1B model
-    config:
-      card_fields: 
-        - name: Definition
-          description: definition of the_phrase
-
-  - id: dictionary_4
-    type: dictionary
-    display_name: "Dictionary: Synonyms, Example, Definition + more"
-    model_connector_id: basic_llama_connector
-    description: |
-      📚 This agent is to take a word or phrase and return a list of information:
-        - Synonyms
-        - Example
-        - Definition
-        - Verb forms
-        - Article
-
-      It always adds the phrase to the learning phrases list of the selected learning goal
+      Try to guess the blank (____) by typing the phrase and send it to the agent.
+      Then agent will respond with the correct answer.
+      Disclaimer: Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
 
       🤖 Powered by self-hosted Llama3.2 3B model
     config:
-      card_fields: 
-        - name: Synonyms
-          description: few synonyms of the_phrase
-        - name: Example
-          description: example sentence using the_phrase
-        - name: Definition
-          description: definition of the_phrase
-        - name: Article
-          description: if the_phrase is a noun, write the Article
-        - name: Verb forms
-          descriptionL: if the_phrase is a verb, write the standard verb forms
+      prompt: |
+        Give me a short dialogue using ${the_phrase} in ${learning_language}
+

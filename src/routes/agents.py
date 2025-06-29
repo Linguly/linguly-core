@@ -54,19 +54,33 @@ def filter_agents(
     return agents
 
 
-@router.post("/agents/{agent_id}/chat", response_model=Message)
-def message_agent(
+@router.post("/agents/{agent_id}/start", response_model=List[Message])
+def start_the_agent(
     agent_id: str,
     current_user: UserInfo = Depends(get_current_user),
-    user_message: Message = Body(...),
 ):
-    if not user_message or not user_message.content:
+    try:
+        return agent_proxy.start_the_agent(
+            agent_id=agent_id, user_id=current_user.user_id
+        )
+    except ValueError as e:
+        print(f"Error messaging agent: {e}")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+
+
+@router.post("/agents/{agent_id}/chat", response_model=List[Message])
+def chat_with_agent(
+    agent_id: str,
+    current_user: UserInfo = Depends(get_current_user),
+    messages: List[Message] = Body(...),
+):
+    if not messages or not messages[0].content:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid message format"
         )
     try:
-        return agent_proxy.message_agent(
-            agent_id=agent_id, user_id=current_user.user_id, user_message=user_message
+        return agent_proxy.chat_with_agent(
+            agent_id=agent_id, user_id=current_user.user_id, messages=messages
         )
     except ValueError as e:
         print(f"Error messaging agent: {e}")
