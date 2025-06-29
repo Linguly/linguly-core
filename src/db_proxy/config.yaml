@@ -16,3 +16,8 @@ databases:
       - users
       - goals
       - learning_phrases
+  - name: agent_session
+    connection: main_db
+    type: mongodb
+    collections:
+      - masking_agent
