@@ -39,11 +39,15 @@ class MongoDB(DB):
             self.client.close()
             print(f"Disconnected from database: {self.db_name}")
 
-    def find(self, collection: str, query: dict) -> list:
+    def find(
+        self, collection: str, query: dict, sort: list = None, limit: int = None
+    ) -> list:
         """Find documents in a specified collection based on a query.
         Args:
             collection (str): The name of the collection to search.
             query (dict): The query to filter documents.
+            sort (list, optional): A list of tuples specifying the sort order.
+            limit (int, optional): The maximum number of documents to return.
         Returns:
             list: A list of documents matching the query.
         Raises:
@@ -53,7 +57,17 @@ class MongoDB(DB):
             raise ValueError(
                 f"Collection {collection} not found in database {self.db_name}"
             )
-        return list(self.db[collection].find(query))
+        if sort:
+            cursor = self.db[collection].find(query).sort(sort)
+        else:
+            cursor = self.db[collection].find(query)
+        if limit:
+            if limit < 1:
+                raise ValueError("Limit must be a positive integer")
+            cursor = cursor.limit(limit)
+        if not cursor:
+            return []
+        return list(cursor)
 
     def insert(self, collection: str, document: dict) -> str:
         """Insert a document into a specified collection.
