@@ -2,6 +2,7 @@ from typing import List
 from src.agent_proxy.types import Message, Agent
 from src.model_proxy import model_proxy
 from src.agent_proxy.agents.dictionary import Dictionary
+from src.agent_proxy.agents.masking import Masking
 from src.shared_context.goals import Goals
 import yaml
 
@@ -34,6 +35,19 @@ def init_agents():
         if agent_type == "dictionary":
             available_agents.append(
                 Dictionary(
+                    id=agent.get("id"),
+                    display_name=agent.get("display_name"),
+                    model_connector_id=agent.get("model_connector_id"),
+                    description=agent.get("description"),
+                    config=agent.get("config", {}),
+                    supported_languages=get_model_supported_languages(
+                        agent.get("model_connector_id")
+                    ),
+                )
+            )
+        elif agent_type == "masking":
+            available_agents.append(
+                Masking(
                     id=agent.get("id"),
                     display_name=agent.get("display_name"),
                     model_connector_id=agent.get("model_connector_id"),
