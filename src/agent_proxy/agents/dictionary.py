@@ -71,7 +71,7 @@ class Dictionary(Agent):
         return model_proxy.get_connector(self.model_connector_id)
 
     def start(self, user_id: str, user_goal: Goal) -> List[Message]:
-        return [Message(content=self.description, role="assistant")]
+        return []
 
     def reply(
         self, user_id: str, user_goal: Goal, messages: List[Message]
