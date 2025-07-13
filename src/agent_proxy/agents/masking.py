@@ -143,7 +143,6 @@ class Masking(Agent):
     def start(self, user_id: str, user_goal: Goal) -> List[Message]:
         masking_text = self.generate_next_masking_text(user_id, user_goal)
         return [
-            Message(content=self.description, role="assistant"),
             Message(content=masking_text, role="assistant"),
         ]
 

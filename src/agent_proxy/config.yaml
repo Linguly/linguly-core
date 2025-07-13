@@ -7,8 +7,11 @@ agents:
       📚 This agent is to take a word or phrase and return a list of information:
         - Example
         - Definition
-        
-      It always adds the phrase to the learning phrases list of the selected learning goal
+
+      *How To:* 
+         - Send a word or phrase in the language you are learning.
+         - The agent will respond with an example sentence and a definition of the word/phrase.
+         - the phrase will be added to the learning phrases list of your selected learning goal.
 
       🤖 Powered by self-hosted Llama3.2 3B model
     config:
@@ -29,8 +32,9 @@ agents:
       Your responses will be recorded and affect how often you will see this phrase later.
 
       *How To:* 
-         - Try to guess the blank (`______`) by typing the phrase and send it to the agent.
-         - Then agent will respond with the correct answer.
+         1. Wait for the agent to send you a short dialogue/text.
+         2. Try to guess the blank (`______`) by typing the phrase and send it to the agent.
+         3. The agent will respond with the correct answer and then send you a new dialogue/text.
 
       *Disclaimer:*
       Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
@@ -41,7 +45,7 @@ agents:
         Give me a short dialogue using "${the_phrase}" only in ${learning_language}. With no additional information around it.
 
 
-  - id: masking_1
+  - id: masking_2
     type: masking
     display_name: "Masking: Short dialogue + level & context"
     model_connector_id: basic_llama_connector
@@ -54,8 +58,9 @@ agents:
       This agent consider your level and context based on the goal definition.
 
       *How To:* 
-         - Try to guess the blank (`______`) by typing the phrase and send it to the agent.
-         - Then agent will respond with the correct answer.
+         1. Wait for the agent to send you a short dialogue/text.
+         2. Try to guess the blank (`______`) by typing the phrase and send it to the agent.
+         3. The agent will respond with the correct answer and then send you a new dialogue/text.
 
       *Disclaimer:*
       Your answer might be also correct even if the provided answer by the agent is different but that is the intended answer.
