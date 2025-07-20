@@ -7,7 +7,7 @@ services:
     networks:
       - coolify
     environment:
-      - OLLAMA_URL=${OLLAMA_URL:-http://ollama-api:11434}
+      - BASIC_MODEL_URL=${BASIC_MODEL_URL:-http://ollama-api:11434}
       - MONGODB_MAIN_URL=${MONGODB_MAIN_URL}
       - JWT_SECRET=${JWT_SECRET}
 
