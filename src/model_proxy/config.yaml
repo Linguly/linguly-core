@@ -18,7 +18,7 @@ model_connectors:
     display_name: "llama3.2_3B_linguly_live"
     model_name: "llama3.2:3b"
     config:
-      api_url_env_var: OLLAMA_URL
+      api_url_env_var: BASIC_MODEL_URL
     supported_languages:
       - English
       - German

@@ -60,9 +60,7 @@ class UserAuth:
         if "@" not in email or "." not in email.split("@")[-1]:
             raise ValueError("Invalid email format")
         # Check if the email already exists
-        existing_users = self.user_db.find(
-            "user_auth", {"email": email.lower()}, limit=1
-        )
+        existing_users = self.user_db.find("user_auth", {"email": email.lower()}, limit=1)
         if existing_users:
             raise ValueError("Email already exists")
 
