@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the environment variables
-ARG BASIC_MODEL_URL
-ENV BASIC_MODEL_URL=$BASIC_MODEL_URL
+ARG OLLAMA_URL
+ENV OLLAMA_URL=$OLLAMA_URL
 
 ARG OPENAI_API_KEY
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
