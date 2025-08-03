@@ -52,6 +52,17 @@ class Masking(Agent):
             .replace("${the_phrase}", the_phrase)
         )
 
+    def does_session_exist(self, user_id: str, goal_id: str) -> bool:
+        """
+        Check if a session exists for the given user and goal.
+        """
+        existing_session = self.db.find(
+            "masking_agent",
+            {"user_id": user_id, "goal_id": goal_id},
+            limit=1,
+        )
+        return bool(existing_session)
+
     def get_next_learning_phrase(self, user_id: str, goal_id: str) -> str:
         return learning_phrases.get_next_learning_phrases(user_id, goal_id, top=1)[0]
 
@@ -132,8 +143,6 @@ class Masking(Agent):
 
     def generate_next_masking_text(self, user_id: str, user_goal: Goal) -> str:
         next_phrase = self.get_next_learning_phrase(user_id, user_goal.id)
-        # Store next_phrase to check it later
-        self.store_next_phrase(user_id, user_goal.id, next_phrase)
 
         max_retries = 5
         for attempt in range(max_retries):
@@ -214,7 +223,10 @@ class Masking(Agent):
         return model_proxy.get_connector(self.model_connector_id)
 
     def start(self, user_id: str, user_goal: Goal) -> List[Message]:
-        self.generate_next_masking_text(user_id, user_goal)
+        if not self.does_session_exist(
+            user_id, user_goal.id
+        ):  # one time initialization
+            self.generate_next_masking_text(user_id, user_goal)
         masking_text = self.retrieve_next_masking_text(user_id, user_goal)
         # Prepare next text
         asyncio.run(self.generate_next_masking_text_async(user_id, user_goal))
