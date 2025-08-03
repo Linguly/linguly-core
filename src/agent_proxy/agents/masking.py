@@ -3,10 +3,11 @@ from src.model_proxy import model_proxy
 from src.db_proxy.db_proxy import get_db
 from src.shared_context.types import Goal
 from src.shared_context.learning_phrases import LearningPhrases
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, ClassVar
-import json
+import asyncio
 import re
+import time
 
 learning_phrases = LearningPhrases()
 BLANK_MASK = "`______`"
@@ -51,8 +52,8 @@ class Masking(Agent):
             .replace("${the_phrase}", the_phrase)
         )
 
-    def get_next_learning_phrase(self, user_id: str, goal_id: str):
-        return learning_phrases.get_next_learning_phrases(user_id, goal_id, top=1)
+    def get_next_learning_phrase(self, user_id: str, goal_id: str) -> str:
+        return learning_phrases.get_next_learning_phrases(user_id, goal_id, top=1)[0]
 
     def store_next_phrase(self, user_id: str, goal_id: str, next_phrase: str):
         existing_session = self.db.find(
@@ -79,6 +80,35 @@ class Masking(Agent):
                 {"$set": {"last_phrase": next_phrase.lower()}},
             )
 
+    def store_next_phrase_and_context(
+        self, user_id: str, goal_id: str, next_phrase: str, next_text: str
+    ):
+        existing_session = self.db.find(
+            "masking_agent",
+            {"user_id": user_id, "goal_id": goal_id},
+            limit=1,
+        )
+        if not existing_session:
+            self.db.insert(
+                "masking_agent",
+                {
+                    "user_id": user_id,
+                    "goal_id": goal_id,
+                    "last_phrase": next_phrase.lower(),
+                    "next_phrase": next_phrase.lower(),
+                    "next_text": next_text,
+                },
+            )
+        else:
+            self.db.update(
+                "masking_agent",
+                {
+                    "user_id": user_id,
+                    "goal_id": goal_id,
+                },
+                {"$set": {"next_phrase": next_phrase.lower(), "next_text": next_text}},
+            )
+
     def generate_and_mask(self, user_goal: Goal, next_phrase: str):
         # Generate text to be masked
         next_phrase_user_message = Message(
@@ -101,7 +131,7 @@ class Masking(Agent):
         return model_response_content
 
     def generate_next_masking_text(self, user_id: str, user_goal: Goal) -> str:
-        next_phrase = self.get_next_learning_phrase(user_id, user_goal.id)[0]
+        next_phrase = self.get_next_learning_phrase(user_id, user_goal.id)
         # Store next_phrase to check it later
         self.store_next_phrase(user_id, user_goal.id, next_phrase)
 
@@ -109,12 +139,55 @@ class Masking(Agent):
         for attempt in range(max_retries):
             masked_generated_response = self.generate_and_mask(user_goal, next_phrase)
             if BLANK_MASK in masked_generated_response:
-                return masked_generated_response
+                # Store the next phrase and context
+                self.store_next_phrase_and_context(
+                    user_id, user_goal.id, next_phrase, masked_generated_response
+                )
+                return
             else:
                 print(
                     f"WARNING: Couldn't find the phrase in the user context (attempt {attempt + 1})"
                 )
         raise RuntimeError("Failed to generate masked phrase after 5 attempts.")
+
+    async def generate_next_masking_text_async(self, user_id: str, user_goal: Goal):
+        """
+        Asynchronous version of generate_next_masking_text.
+        This method is intended to be run in an event loop.
+        """
+        await asyncio.to_thread(self.generate_next_masking_text, user_id, user_goal)
+
+    def retrieve_next_masking_text(self, user_id: str, user_goal: Goal) -> str:
+        session = self.db.find(
+            "masking_agent",
+            {"user_id": user_id, "goal_id": user_goal.id},
+            limit=1,
+        )
+        if not session or not session[0]:
+            raise ValueError("No session found for the user and goal.")
+        next_text = session[0].get("next_text")
+        if not next_text:
+            # Wait and check until next_text is available (max 10 seconds, check every 0.5s)
+            timeout = 10
+            interval = 0.5
+            elapsed = 0
+            while not next_text and elapsed < timeout:
+                time.sleep(interval)
+                elapsed += interval
+                session = self.db.find(
+                    "masking_agent",
+                    {"user_id": user_id, "goal_id": user_goal.id},
+                    limit=1,
+                )
+                next_text = (
+                    session[0].get("next_text") if session and session[0] else None
+                )
+            if not next_text:
+                raise RuntimeError("next_text is not available after waiting.")
+
+        # Store next_phrase to check it later
+        self.store_next_phrase(user_id, user_goal.id, session[0].get("next_phrase"))
+        return next_text
 
     def validate(self, user_id: str, goal_id: str, user_answer: str) -> str:
         session = self.db.find(
@@ -141,7 +214,11 @@ class Masking(Agent):
         return model_proxy.get_connector(self.model_connector_id)
 
     def start(self, user_id: str, user_goal: Goal) -> List[Message]:
-        masking_text = self.generate_next_masking_text(user_id, user_goal)
+        self.generate_next_masking_text(user_id, user_goal)
+        masking_text = self.retrieve_next_masking_text(user_id, user_goal)
+        # Prepare next text
+        asyncio.run(self.generate_next_masking_text_async(user_id, user_goal))
+        # send back the first message with the masked text
         return [
             Message(content=masking_text, role="assistant"),
         ]
@@ -152,7 +229,9 @@ class Masking(Agent):
         # Validate user answer
         last_phrase = self.validate(user_id, user_goal.id, messages[0].content)
         # Prepare next text
-        masking_text = self.generate_next_masking_text(user_id, user_goal)
+        masking_text = self.retrieve_next_masking_text(user_id, user_goal)
+        # Prepare future text asynchronously
+        asyncio.run(self.generate_next_masking_text_async(user_id, user_goal))
         return [
             Message(content=last_phrase, role="assistant"),
             Message(content=masking_text, role="assistant"),
