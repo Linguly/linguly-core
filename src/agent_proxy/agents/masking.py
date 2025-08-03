@@ -181,8 +181,6 @@ class Masking(Agent):
             interval = 0.5
             elapsed = 0
             while not next_text and elapsed < timeout:
-                time.sleep(interval)
-                elapsed += interval
                 session = self.db.find(
                     "masking_agent",
                     {"user_id": user_id, "goal_id": user_goal.id},
@@ -191,6 +189,10 @@ class Masking(Agent):
                 next_text = (
                     session[0].get("next_text") if session and session[0] else None
                 )
+                if next_text:
+                    break
+                time.sleep(interval)
+                elapsed += interval
             if not next_text:
                 raise RuntimeError("next_text is not available after waiting.")
 
