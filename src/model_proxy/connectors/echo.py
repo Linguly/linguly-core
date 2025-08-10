@@ -1,5 +1,6 @@
 from src.model_proxy.types import ModelConnector, Message
 from typing import List
+import time
 
 
 class Echo(ModelConnector):
@@ -16,5 +17,8 @@ class Echo(ModelConnector):
         super().__init__(**data)
 
     def reply(self, messages: List[Message]) -> Message:
+        print("Echo connector will echo the received message with a delay of 5 seconds")
+        time.sleep(5)  # Add a 5 second delay to mimic real world scenario
         response = messages[0].content
+        print("Echo connector response:", response)
         return Message(content=response, role="assistant")

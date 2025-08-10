@@ -4,6 +4,7 @@ from src.model_proxy import model_proxy
 from src.agent_proxy.agents.dictionary import Dictionary
 from src.agent_proxy.agents.masking import Masking
 from src.shared_context.goals import Goals
+from fastapi import BackgroundTasks
 import yaml
 
 goals = Goals()
@@ -95,20 +96,25 @@ def get_agent(agent_id: str):
     raise ValueError(f"Agent with id {agent_id} not found")
 
 
-def start_the_agent(agent_id: str, user_id: str) -> List[Message]:
+def start_the_agent(
+    agent_id: str, user_id: str, background_tasks: BackgroundTasks
+) -> List[Message]:
     agent = get_agent(agent_id)
     print(f"Start agent: {agent.display_name} ({agent.id})")
     user_goal = goals.get_selected_goal(user_id)
-    return agent.start(user_id, user_goal)
+    return agent.start(user_id, user_goal, background_tasks)
 
 
 def chat_with_agent(
-    agent_id: str, user_id: str, messages: List[Message]
+    agent_id: str,
+    user_id: str,
+    messages: List[Message],
+    background_tasks: BackgroundTasks,
 ) -> List[Message]:
     agent = get_agent(agent_id)
     print(f"Chat with agent: {agent.display_name} ({agent.id})")
     user_goal = goals.get_selected_goal(user_id)
-    return agent.reply(user_id, user_goal, messages)
+    return agent.reply(user_id, user_goal, messages, background_tasks)
 
 
 available_agents = init_agents()
