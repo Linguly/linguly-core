@@ -2,6 +2,7 @@ from src.agent_proxy.types import Agent, Message
 from src.model_proxy import model_proxy
 from src.shared_context.types import Goal
 from src.shared_context.learning_phrases import LearningPhrases
+from fastapi import BackgroundTasks
 from pydantic import BaseModel, Field
 from typing import List
 import json
@@ -70,11 +71,17 @@ class Dictionary(Agent):
     def model_connector(self):
         return model_proxy.get_connector(self.model_connector_id)
 
-    def start(self, user_id: str, user_goal: Goal) -> List[Message]:
+    def start(
+        self, user_id: str, user_goal: Goal, background_tasks: BackgroundTasks
+    ) -> List[Message]:
         return []
 
     def reply(
-        self, user_id: str, user_goal: Goal, messages: List[Message]
+        self,
+        user_id: str,
+        user_goal: Goal,
+        messages: List[Message],
+        background_tasks: BackgroundTasks,
     ) -> List[Message]:
         user_message = messages[0]
         self.add_to_learning_phrases(user_id, user_goal.id, user_message.content)

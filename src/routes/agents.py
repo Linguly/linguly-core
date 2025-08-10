@@ -1,6 +1,14 @@
-from fastapi import APIRouter, HTTPException, status, Body, Depends, Query
+from fastapi import (
+    APIRouter,
+    HTTPException,
+    status,
+    Body,
+    Depends,
+    Query,
+    BackgroundTasks,
+)
 from typing import List, Optional
-from src.user.user_auth import validate_token, get_current_user
+from src.user.user_auth import get_current_user
 from src.user.types import UserInfo
 from src.agent_proxy.types import Agent, Message
 from src.agent_proxy import agent_proxy
@@ -57,11 +65,14 @@ def filter_agents(
 @router.post("/agents/{agent_id}/start", response_model=List[Message])
 def start_the_agent(
     agent_id: str,
+    background_tasks: BackgroundTasks,
     current_user: UserInfo = Depends(get_current_user),
 ):
     try:
         return agent_proxy.start_the_agent(
-            agent_id=agent_id, user_id=current_user.user_id
+            agent_id=agent_id,
+            user_id=current_user.user_id,
+            background_tasks=background_tasks,
         )
     except ValueError as e:
         print(f"Error starting the agent: {e}")
@@ -71,6 +82,7 @@ def start_the_agent(
 @router.post("/agents/{agent_id}/chat", response_model=List[Message])
 def chat_with_agent(
     agent_id: str,
+    background_tasks: BackgroundTasks,
     current_user: UserInfo = Depends(get_current_user),
     messages: List[Message] = Body(...),
 ):
@@ -80,7 +92,10 @@ def chat_with_agent(
         )
     try:
         return agent_proxy.chat_with_agent(
-            agent_id=agent_id, user_id=current_user.user_id, messages=messages
+            agent_id=agent_id,
+            user_id=current_user.user_id,
+            messages=messages,
+            background_tasks=background_tasks,
         )
     except ValueError as e:
         print(f"Error messaging agent: {e}")

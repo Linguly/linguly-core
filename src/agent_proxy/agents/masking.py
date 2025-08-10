@@ -3,9 +3,9 @@ from src.model_proxy import model_proxy
 from src.db_proxy.db_proxy import get_db
 from src.shared_context.types import Goal
 from src.shared_context.learning_phrases import LearningPhrases
+from fastapi import BackgroundTasks
 from pydantic import BaseModel
 from typing import List, ClassVar
-import asyncio
 import re
 import time
 
@@ -88,7 +88,13 @@ class Masking(Agent):
                     "user_id": user_id,
                     "goal_id": goal_id,
                 },
-                {"$set": {"last_phrase": next_phrase.lower()}},
+                {
+                    "$set": {
+                        "last_phrase": next_phrase.lower(),
+                        "next_phrase": None,
+                        "next_text": None,
+                    }
+                },
             )
 
     def store_next_phrase_and_context(
@@ -159,13 +165,6 @@ class Masking(Agent):
                 )
         raise RuntimeError("Failed to generate masked phrase after 5 attempts.")
 
-    async def generate_next_masking_text_async(self, user_id: str, user_goal: Goal):
-        """
-        Asynchronous version of generate_next_masking_text.
-        This method is intended to be run in an event loop.
-        """
-        await asyncio.to_thread(self.generate_next_masking_text, user_id, user_goal)
-
     def retrieve_next_masking_text(self, user_id: str, user_goal: Goal) -> str:
         session = self.db.find(
             "masking_agent",
@@ -224,28 +223,34 @@ class Masking(Agent):
     def model_connector(self):
         return model_proxy.get_connector(self.model_connector_id)
 
-    def start(self, user_id: str, user_goal: Goal) -> List[Message]:
+    def start(
+        self, user_id: str, user_goal: Goal, background_tasks: BackgroundTasks
+    ) -> List[Message]:
         if not self.does_session_exist(
             user_id, user_goal.id
         ):  # one time initialization
             self.generate_next_masking_text(user_id, user_goal)
         masking_text = self.retrieve_next_masking_text(user_id, user_goal)
         # Prepare next text
-        asyncio.run(self.generate_next_masking_text_async(user_id, user_goal))
+        background_tasks.add_task(self.generate_next_masking_text, user_id, user_goal)
         # send back the first message with the masked text
         return [
             Message(content=masking_text, role="assistant"),
         ]
 
     def reply(
-        self, user_id: str, user_goal: Goal, messages: List[Message]
+        self,
+        user_id: str,
+        user_goal: Goal,
+        messages: List[Message],
+        background_tasks: BackgroundTasks,
     ) -> List[Message]:
         # Validate user answer
         last_phrase = self.validate(user_id, user_goal.id, messages[0].content)
         # Prepare next text
         masking_text = self.retrieve_next_masking_text(user_id, user_goal)
         # Prepare future text asynchronously
-        asyncio.run(self.generate_next_masking_text_async(user_id, user_goal))
+        background_tasks.add_task(self.generate_next_masking_text, user_id, user_goal)
         return [
             Message(content=last_phrase, role="assistant"),
             Message(content=masking_text, role="assistant"),
