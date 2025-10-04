@@ -41,10 +41,11 @@ class LearningPhrases(BaseModel):
     source_id: str  # e.g., "agent_id", "package_id"
     source_type: str  # e.g., "agent", "package"
 
+
 class PhrasePackage(BaseModel):
     id: str
     name: str
     description: str
-    goal_type: GoalInput  # e.g., {"language": "German", "level": "C1", "context": ["General"]}
+    goal_type: GoalInput # e.g., {"language": "German", "level": "C1", "context": ["General"]}
     source: str  # e.g., "chatGPT"
-    path: str # e.g., "src/shared_context/phrase_packages/german_c1_general.yaml"
+    path: str  # e.g., "src/shared_context/phrase_packages/german_c1_general.yaml"

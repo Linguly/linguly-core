@@ -5,7 +5,6 @@ from src.shared_context.learning_phrases import LearningPhrases
 from fastapi import BackgroundTasks
 from pydantic import BaseModel, Field
 from typing import List
-import json
 
 learning_phrases = LearningPhrases()
 
