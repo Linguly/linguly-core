@@ -19,7 +19,7 @@ POST {{base_url}}/signup
 Content-Type: application/json
 
 {
-    "email": "test@test2.com",
+    "email": "test@test.com",
     "password": "tes6aaa23",
     "name": "Test User"
 }
@@ -66,9 +66,9 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "language": "English",
+    "language": "German",
     "level": "B2",
-    "context": "business",
+    "context": "General",
     "period": "months"
 }
 
@@ -80,5 +80,18 @@ Authorization: Bearer {{access_token}}
 
 ### Get selected goal
 GET {{base_url}}/goals/selected
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Get phrase packages for a goal
+@goalId = 68e141064948cca9c11a9b02
+GET {{base_url}}/goals/{{goalId}}/phrase_packages
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Import a phrase package to a goal
+
+@phrasePackageId = german_b2_general_generated_starter
+POST {{base_url}}/goals/{{goalId}}/phrase_packages/{{phrasePackageId}}/import
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

@@ -22,7 +22,7 @@ class GoalInput(BaseModel):
     language: str
     level: str  # e.g., "A1", "B2" (CEFR levels)
     context: str  # e.g., "general", "academic", "business"
-    period: str  # e.g., "weeks", "months", "years"
+    period: str = None  # e.g., "weeks", "months", "years"
 
 
 class LearningPhrases(BaseModel):
@@ -40,3 +40,12 @@ class LearningPhrases(BaseModel):
     last_used_date: str
     source_id: str  # e.g., "agent_id", "package_id"
     source_type: str  # e.g., "agent", "package"
+
+
+class PhrasePackage(BaseModel):
+    id: str
+    name: str
+    description: str
+    goal_type: GoalInput # e.g., {"language": "German", "level": "C1", "context": ["General"]}
+    source: str  # e.g., "chatGPT"
+    path: str  # e.g., "src/shared_context/phrase_packages/german_c1_general.yaml"

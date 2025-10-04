@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from src.user.user_auth import get_current_user
 from src.user.types import UserInfo
 from src.shared_context.goals import Goals
-from src.shared_context.types import Goal, GoalInput
+from src.shared_context.types import Goal, GoalInput, PhrasePackage
+from src.shared_context import phrase_packages
 
 router = APIRouter()
 goals = Goals()
@@ -65,3 +66,57 @@ def get_selected_goal(current_user: UserInfo = Depends(get_current_user)):
             detail="No selected goal found for the current user.",
         )
     return selected_goal
+
+
+@router.get("/goals/{goal_id}/phrase_packages", response_model=list[PhrasePackage])
+def get_phrase_packages(
+    goal_id: str, current_user: UserInfo = Depends(get_current_user)
+):
+    goal = goals.get_goal(goal_id, current_user.user_id)
+    if not goal:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No selected goal found for the current user.",
+        )
+    try:
+        packages = phrase_packages.get_phrase_packages(
+            goal.language, goal.level, goal.context
+        )
+        return packages
+    except Exception as e:
+        print(f"Error retrieving phrase packages: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred while retrieving the phrase packages.",
+        )
+
+
+@router.post("/goals/{goal_id}/phrase_packages/{phrase_package_id}/import")
+def import_phrase_package(
+    goal_id: str,
+    phrase_package_id: str,
+    current_user: UserInfo = Depends(get_current_user),
+):
+    """Import the phrases from a phrase package to the selected goal."""
+
+    # Verify that the goal belongs to the current user
+    goal = goals.get_goal(goal_id, current_user.user_id)
+    if not goal:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The specified goal was not found for the current user.",
+        )
+    # Add the phrases from the package to the learning phrases
+    try:
+        phrase_packages.add_a_package_to_learning_phrases(
+            current_user.user_id, goal_id, phrase_package_id
+        )
+        return {
+            "message": "The phrases from the package imported successfully."
+        }, status.HTTP_201_CREATED
+    except Exception as e:
+        print(f"Error importing phrase package: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred while importing the phrase package.",
+        )

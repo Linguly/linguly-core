@@ -1,0 +1,136 @@
+phrase,type,category,article,verb_forms
+die Abwechslung,word,noun,die,
+abwechslungsreich,word,adjective,,
+akzeptieren,word,verb,,"akzeptieren, akzeptierte, hat akzeptiert"
+die Analyse,word,noun,die,
+analysieren,word,verb,,"analysieren, analysierte, hat analysiert"
+der Anspruch,word,noun,der,
+anspruchsvoll,word,adjective,,
+die Argumentation,word,noun,die,
+argumentieren,word,verb,,"argumentieren, argumentierte, hat argumentiert"
+die Bedeutung,word,noun,die,
+bedeuten,word,verb,,"bedeuten, bedeutete, hat bedeutet"
+die Behauptung,word,noun,die,
+behaupten,word,verb,,"behaupten, behauptete, hat behauptet"
+die Beziehung,word,noun,die,
+beziehen,word,verb,,"beziehen, bezog, hat bezogen"
+die Chance,word,noun,die,
+chancenlos,word,adjective,,
+das Konzept,word,noun,das,
+konzipieren,word,verb,,"konzipieren, konzipierte, hat konzipiert"
+die Diskussion,word,noun,die,
+diskutieren,word,verb,,"diskutieren, diskutierte, hat diskutiert"
+das Ergebnis,word,noun,das,
+resultieren,word,verb,,"resultieren, resultierte, ist resultiert"
+die Erfahrung,word,noun,die,
+erfahren,word,verb,,"erfahren, erfuhr, hat erfahren"
+die Erkenntnis,word,noun,die,
+erkennen,word,verb,,"erkennen, erkannte, hat erkannt"
+die Fähigkeit,word,noun,die,
+fähig,word,adjective,,
+die Frage,word,noun,die,
+fragen,word,verb,,"fragen, fragte, hat gefragt"
+die Grundlage,word,noun,die,
+gründen,word,verb,,"gründen, gründete, hat gegründet"
+die Herausforderung,word,noun,die,
+herausfordern,word,verb,,"herausfordern, forderte heraus, hat herausgefordert"
+die Idee,word,noun,die,
+ideell,word,adjective,,
+die Information,word,noun,die,
+informieren,word,verb,,"informieren, informierte, hat informiert"
+die Kommunikation,word,noun,die,
+kommunizieren,word,verb,,"kommunizieren, kommunizierte, hat kommuniziert"
+die Konsequenz,word,noun,die,
+konsequent,word,adjective,,
+die Kritik,word,noun,die,
+kritisieren,word,verb,,"kritisieren, kritisierte, hat kritisiert"
+die Meinung,word,noun,die,
+meinen,word,verb,,"meinen, meinte, hat gemeint"
+die Methode,word,noun,die,
+methodisch,word,adjective,,
+die Nachricht,word,noun,die,
+nachrichten,word,verb,,"nachrichten, nachrichtete, hat nachgerichtet"
+die Notwendigkeit,word,noun,die,
+notwendig,word,adjective,,
+die Planung,word,noun,die,
+planen,word,verb,,"planen, plante, hat geplant"
+die Qualität,word,noun,die,
+qualitativ,word,adjective,,
+die Rede,word,noun,die,
+reden,word,verb,,"reden, redete, hat geredet"
+die Regel,word,noun,die,
+regeln,word,verb,,"regeln, regelte, hat geregelt"
+die Reaktion,word,noun,die,
+reagieren,word,verb,,"reagieren, reagierte, hat reagiert"
+die Realität,word,noun,die,
+realistisch,word,adjective,,
+die Reflexion,word,noun,die,
+reflektieren,word,verb,,"reflektieren, reflektierte, hat reflektiert"
+die Situation,word,noun,die,
+situativ,word,adjective,,
+die Strategie,word,noun,die,
+strategisch,word,adjective,,
+die Struktur,word,noun,die,
+strukturieren,word,verb,,"strukturieren, strukturierte, hat strukturiert"
+die Studie,word,noun,die,
+studieren,word,verb,,"studieren, studierte, hat studiert"
+die Diskussion,word,noun,die,
+diskutieren,word,verb,,"diskutieren, diskutierte, hat diskutiert"
+das Verständnis,word,noun,das,
+verstehen,word,verb,,"verstehen, verstand, hat verstanden"
+die Verbesserung,word,noun,die,
+verbessern,word,verb,,"verbessern, verbesserte, hat verbessert"
+die Verantwortung,word,noun,die,
+verantworten,word,verb,,"verantworten, verantwortete, hat verantwortet"
+die Vorschlag,word,noun,der,
+vorschlagen,word,verb,,"vorschlagen, schlug vor, hat vorgeschlagen"
+die Wirkung,word,noun,die,
+wirken,word,verb,,"wirken, wirkte, hat gewirkt"
+die Zusammenarbeit,word,noun,die,
+zusammenarbeiten,word,verb,,"zusammenarbeiten, arbeitete zusammen, hat zusammengearbeitet"
+die Zustimmung,word,noun,die,
+zustimmen,word,verb,,"zustimmen, stimmte zu, hat zugestimmt"
+die Zukunft,word,noun,die,
+zukünftig,word,adjective,,
+abbrechen,word,verb,,"abbrechen, brach ab, hat abgebrochen"
+annehmen,word,verb,,"annehmen, nahm an, hat angenommen"
+ansteigen,word,verb,,"ansteigen, stieg an, ist angestiegen"
+auswählen,word,verb,,"auswählen, wählte aus, hat ausgewählt"
+beeinflussen,word,verb,,"beeinflussen, beeinflusste, hat beeinflusst"
+beschreiben,word,verb,,"beschreiben, beschrieb, hat beschrieben"
+entwickeln,word,verb,,"entwickeln, entwickelte, hat entwickelt"
+erklären,word,verb,,"erklären, erklärte, hat erklärt"
+erreichen,word,verb,,"erreichen, erreichte, hat erreicht"
+erscheinen,word,verb,,"erscheinen, erschien, ist erschienen"
+feststellen,word,verb,,"feststellen, stellte fest, hat festgestellt"
+fordern,word,verb,,"fordern, forderte, hat gefordert"
+fördern,word,verb,,"fördern, förderte, hat gefördert"
+gleichen,word,verb,,"gleichen, glich, hat geglichen"
+handeln,word,verb,,"handeln, handelte, hat gehandelt"
+herstellen,word,verb,,"herstellen, stellte her, hat hergestellt"
+informieren,word,verb,,"informieren, informierte, hat informiert"
+interpretieren,word,verb,,"interpretieren, interpretierte, hat interpretiert"
+kontrollieren,word,verb,,"kontrollieren, kontrollierte, hat kontrolliert"
+leisten,word,verb,,"leisten, leistete, hat geleistet"
+lösen,word,verb,,"lösen, löste, hat gelöst"
+reagieren,word,verb,,"reagieren, reagierte, hat reagiert"
+sich beschäftigen,phrase,verb,,"beschäftigen, beschäftigte, hat beschäftigt"
+sich entscheiden,phrase,verb,,"entscheiden, entschied, hat entschieden"
+sich entwickeln,phrase,verb,,"entwickeln, entwickelte, hat entwickelt"
+sich informieren,phrase,verb,,"informieren, informierte, hat informiert"
+sich kümmern,phrase,verb,,"kümmern, kümmerte, hat gekümmert"
+sich leisten,phrase,verb,,"leisten, leistete, hat geleistet"
+sich merken,phrase,verb,,"merken, merkte, hat gemerkt"
+sich vorbereiten,phrase,verb,,"vorbereiten, bereitete vor, hat vorbereitet"
+tatsächlich,word,adverb,,
+unterscheiden,word,verb,,"unterscheiden, unterschied, hat unterschieden"
+verändern,word,verb,,"verändern, veränderte, hat verändert"
+vergleichen,word,verb,,"vergleichen, verglich, hat verglichen"
+verlassen,word,verb,,"verlassen, verließ, hat verlassen"
+vermuten,word,verb,,"vermuten, vermutete, hat vermutet"
+versuchen,word,verb,,"versuchen, versuchte, hat versucht"
+vorstellen,word,verb,,"vorstellen, stellte vor, hat vorgestellt"
+wählen,word,verb,,"wählen, wählte, hat gewählt"
+widersprechen,word,verb,,"widersprechen, widersprach, hat widersprochen"
+wiederholen,word,verb,,"wiederholen, wiederholte, hat wiederholt"
+zunehmen,word,verb,,"zunehmen, nahm zu, hat zugenommen"

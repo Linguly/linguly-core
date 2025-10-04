@@ -96,3 +96,16 @@ class Goals:
                 f"Selected goal {selected_goal_id} not found for user {user_id}."
             )
         return Goal(**goals[0])
+
+    def get_goal(self, goal_id: str, user_id: str) -> Goal:
+        """
+        Fetches a goal by its ID.
+        """
+        try:
+            goal_obj_id = ObjectId(goal_id)
+        except Exception:
+            raise ValueError(f"Invalid goal_id: {goal_id}")
+        goals = self.db.find("goals", {"_id": goal_obj_id, "user_id": user_id})
+        if not goals:
+            raise ValueError(f"Goal {goal_id} not found for user {user_id}.")
+        return Goal(**goals[0])

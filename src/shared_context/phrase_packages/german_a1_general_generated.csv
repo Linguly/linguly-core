@@ -1,0 +1,125 @@
+phrase,type,category,article,verb_forms
+das Haus,word,noun,das,
+sein,word,verb,,"sein, war, ist gewesen"
+der Mann,word,noun,der,
+haben,word,verb,,"haben, hatte, hat gehabt"
+die Frau,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+das Kind,word,noun,das,
+kommen,word,verb,,"kommen, kam, ist gekommen"
+der Hund,word,noun,der,
+spielen,word,verb,,"spielen, spielte, hat gespielt"
+die Katze,word,noun,die,
+essen,word,verb,,"essen, aß, hat gegessen"
+das Auto,word,noun,das,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+der Apfel,word,noun,der,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+die Lampe,word,noun,die,
+sehen,word,verb,,"sehen, sah, hat gesehen"
+das Buch,word,noun,das,
+lesen,word,verb,,"lesen, las, hat gelesen"
+die Schule,word,noun,die,
+lernen,word,verb,,"lernen, lernte, hat gelernt"
+der Tisch,word,noun,der,
+stehen,word,verb,,"stehen, stand, hat gestanden"
+die Tür,word,noun,die,
+öffnen,word,verb,,"öffnen, öffnete, hat geöffnet"
+das Fenster,word,noun,das,
+schließen,word,verb,,"schließen, schloss, hat geschlossen"
+der Stuhl,word,noun,der,
+sitzen,word,verb,,"sitzen, saß, hat gesessen"
+die Straße,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+das Wasser,word,noun,das,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+das Brot,word,noun,das,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Milch,word,noun,die,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+das Ei,word,noun,das,
+kochen,word,verb,,"kochen, kochte, hat gekocht"
+der Freund,word,noun,der,
+heißen,word,verb,,"heißen, hieß, hat geheißen"
+die Familie,word,noun,die,
+wohnen,word,verb,,"wohnen, wohnte, hat gewohnt"
+das Bett,word,noun,das,
+liegen,word,verb,,"liegen, lag, hat gelegen"
+der Apfel,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Schule,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+das Auto,word,noun,das,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+der Hund,word,noun,der,
+laufen,word,verb,,"laufen, lief, ist gelaufen"
+die Katze,word,noun,die,
+schlafen,word,verb,,"schlafen, schlief, hat geschlafen"
+das Kind,word,noun,das,
+spielen,word,verb,,"spielen, spielte, hat gespielt"
+die Blume,word,noun,die,
+blühen,word,verb,,"blühen, blühte, hat geblüht"
+der Baum,word,noun,der,
+wachsen,word,verb,,"wachsen, wuchs, ist gewachsen"
+die Sonne,word,noun,die,
+scheinen,word,verb,,"scheinen, schien, hat geschienen"
+der Mond,word,noun,der,
+leuchten,word,verb,,"leuchten, leuchtete, hat geleuchtet"
+das Wetter,word,noun,das,
+sein,word,verb,,"sein, war, ist gewesen"
+der Tag,word,noun,der,
+beginnen,word,verb,,"beginnen, begann, hat begonnen"
+die Nacht,word,noun,die,
+kommen,word,verb,,"kommen, kam, ist gekommen"
+das Essen,word,noun,das,
+kochen,word,verb,,"kochen, kochte, hat gekocht"
+der Apfel,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Milch,word,noun,die,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+das Wasser,word,noun,das,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+die Mutter,word,noun,die,
+lieben,word,verb,,"lieben, liebte, hat geliebt"
+der Vater,word,noun,der,
+arbeiten,word,verb,,"arbeiten, arbeitete, hat gearbeitet"
+die Schwester,word,noun,die,
+helfen,word,verb,,"helfen, half, hat geholfen"
+der Bruder,word,noun,der,
+spielen,word,verb,,"spielen, spielte, hat gespielt"
+das Haus,word,noun,das,
+wohnen,word,verb,,"wohnen, wohnte, hat gewohnt"
+die Schule,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+der Lehrer,word,noun,der,
+unterrichten,word,verb,,"unterrichten, unterrichtete, hat unterrichtet"
+die Stadt,word,noun,die,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+das Auto,word,noun,das,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+der Zug,word,noun,der,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+die Straße,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+das Buch,word,noun,das,
+lesen,word,verb,,"lesen, las, hat gelesen"
+die Zeitung,word,noun,die,
+lesen,word,verb,,"lesen, las, hat gelesen"
+der Apfel,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Lampe,word,noun,die,
+sehen,word,verb,,"sehen, sah, hat gesehen"
+das Fenster,word,noun,das,
+öffnen,word,verb,,"öffnen, öffnete, hat geöffnet"
+die Tür,word,noun,die,
+schließen,word,verb,,"schließen, schloss, hat geschlossen"
+der Stuhl,word,noun,der,
+sitzen,word,verb,,"sitzen, saß, hat gesessen"
+das Wasser,word,noun,das,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+die Milch,word,noun,die,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+das Brot,word,noun,das,
+essen,word,verb,,"essen, aß, hat gegessen"
+der Apfel,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
