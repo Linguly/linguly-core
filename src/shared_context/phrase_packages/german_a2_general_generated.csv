@@ -1,0 +1,173 @@
+phrase,type,category,article,verb_forms
+das Haus,word,noun,das,
+wohnen,word,verb,,"wohnen, wohnte, hat gewohnt"
+der Apfel,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Schule,word,noun,die,
+lernen,word,verb,,"lernen, lernte, hat gelernt"
+das Auto,word,noun,das,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+der Hund,word,noun,der,
+laufen,word,verb,,"laufen, lief, ist gelaufen"
+die Lampe,word,noun,die,
+sehen,word,verb,,"sehen, sah, hat gesehen"
+das Buch,word,noun,das,
+lesen,word,verb,,"lesen, las, hat gelesen"
+die Stadt,word,noun,die,
+reisen,word,verb,,"reisen, reiste, ist gereist"
+der Tisch,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Tür,word,noun,die,
+öffnen,word,verb,,"öffnen, öffnete, hat geöffnet"
+das Fenster,word,noun,das,
+schließen,word,verb,,"schließen, schloss, hat geschlossen"
+der Lehrer,word,noun,der,
+unterrichten,word,verb,,"unterrichten, unterrichtete, hat unterrichtet"
+die Katze,word,noun,die,
+schlafen,word,verb,,"schlafen, schlief, hat geschlafen"
+das Wasser,word,noun,das,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+die Straße,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+der Freund,word,noun,der,
+helfen,word,verb,,"helfen, half, hat geholfen"
+die Zeitung,word,noun,die,
+lesen,word,verb,,"lesen, las, hat gelesen"
+das Essen,word,noun,das,
+kochen,word,verb,,"kochen, kochte, hat gekocht"
+der Garten,word,noun,der,
+arbeiten,word,verb,,"arbeiten, arbeitete, hat gearbeitet"
+die Tasche,word,noun,die,
+tragen,word,verb,,"tragen, trug, hat getragen"
+das Geld,word,noun,das,
+bezahlen,word,verb,,"bezahlen, bezahlte, hat bezahlt"
+der Brief,word,noun,der,
+schreiben,word,verb,,"schreiben, schrieb, hat geschrieben"
+die Reise,word,noun,die,
+planen,word,verb,,"planen, plante, hat geplant"
+das Bild,word,noun,das,
+malen,word,verb,,"malen, malte, hat gemalt"
+der Film,word,noun,der,
+sehen,word,verb,,"sehen, sah, hat gesehen"
+die Musik,word,noun,die,
+hören,word,verb,,"hören, hörte, hat gehört"
+das Hemd,word,noun,das,
+tragen,word,verb,,"tragen, trug, hat getragen"
+der Schuh,word,noun,der,
+passen,word,verb,,"passen, passte, hat gepasst"
+die Brille,word,noun,die,
+tragen,word,verb,,"tragen, trug, hat getragen"
+das Essen,word,noun,das,
+bestellen,word,verb,,"bestellen, bestellte, hat bestellt"
+der Laden,word,noun,der,
+öffnen,word,verb,,"öffnen, öffnete, hat geöffnet"
+die Stadt,word,noun,die,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+das Wetter,word,noun,das,
+sein,word,verb,,"sein, war, ist gewesen"
+die Zeit,word,noun,die,
+verbringen,word,verb,,"verbringen, verbrachte, hat verbracht"
+der Morgen,word,noun,der,
+beginnen,word,verb,,"beginnen, begann, hat begonnen"
+die Nacht,word,noun,die,
+schlafen,word,verb,,"schlafen, schlief, hat geschlafen"
+das Zimmer,word,noun,das,
+aufräumen,word,verb,,"aufräumen, räumte auf, hat aufgeräumt"
+der Freund,word,noun,der,
+treffen,word,verb,,"treffen, traf, hat getroffen"
+die Arbeit,word,noun,die,
+finden,word,verb,,"finden, fand, hat gefunden"
+das Geschäft,word,noun,das,
+kaufen,word,verb,,"kaufen, kaufte, hat gekauft"
+die Familie,word,noun,die,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+der Tag,word,noun,der,
+arbeiten,word,verb,,"arbeiten, arbeitete, hat gearbeitet"
+die Woche,word,noun,die,
+planen,word,verb,,"planen, plante, hat geplant"
+das Land,word,noun,das,
+reisen,word,verb,,"reisen, reiste, ist gereist"
+die Sprache,word,noun,die,
+lernen,word,verb,,"lernen, lernte, hat gelernt"
+der Sport,word,noun,der,
+machen,word,verb,,"machen, machte, hat gemacht"
+die Schule,word,noun,die,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+das Krankenhaus,word,noun,das,
+arbeiten,word,verb,,"arbeiten, arbeitete, hat gearbeitet"
+die Polizei,word,noun,die,
+rufen,word,verb,,"rufen, rief, hat gerufen"
+das Auto,word,noun,das,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+der Zug,word,noun,der,
+fahren,word,verb,,"fahren, fuhr, ist gefahren"
+die Straße,word,noun,die,
+überqueren,word,verb,,"überqueren, überquerte, hat überquert"
+das Geld,word,noun,das,
+sparen,word,verb,,"sparen, sparte, hat gespart"
+die Bank,word,noun,die,
+gehen,word,verb,,"gehen, ging, ist gegangen"
+der Arzt,word,noun,der,
+helfen,word,verb,,"helfen, half, hat geholfen"
+die Medizin,word,noun,die,
+nehmen,word,verb,,"nehmen, nahm, hat genommen"
+das Essen,word,noun,das,
+kochen,word,verb,,"kochen, kochte, hat gekocht"
+der Kuchen,word,noun,der,
+essen,word,verb,,"essen, aß, hat gegessen"
+die Suppe,word,noun,die,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+das Getränk,word,noun,das,
+bestellen,word,verb,,"bestellen, bestellte, hat bestellt"
+der Kaffee,word,noun,der,
+trinken,word,verb,,"trinken, trank, hat getrunken"
+die Arbeit,word,noun,die,
+beginnen,word,verb,,"beginnen, begann, hat begonnen"
+das Telefon,word,noun,das,
+benutzen,word,verb,,"benutzen, benutzte, hat benutzt"
+die Email,word,noun,die,
+schreiben,word,verb,,"schreiben, schrieb, hat geschrieben"
+der Brief,word,noun,der,
+lesen,word,verb,,"lesen, las, hat gelesen"
+die Zeitung,word,noun,die,
+lesen,word,verb,,"lesen, las, hat gelesen"
+das Buch,word,noun,das,
+kaufen,word,verb,,"kaufen, kaufte, hat gekauft"
+die Bibliothek,word,noun,die,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+der Film,word,noun,der,
+sehen,word,verb,,"sehen, sah, hat gesehen"
+die Musik,word,noun,die,
+hören,word,verb,,"hören, hörte, hat gehört"
+das Konzert,word,noun,das,
+besuchen,word,verb,,"besuchen, besuchte, hat besucht"
+der Freund,word,noun,der,
+anrufen,word,verb,,"anrufen, rief an, hat angerufen"
+die Party,word,noun,die,
+feiern,word,verb,,"feiern, feierte, hat gefeiert"
+das Geschenk,word,noun,das,
+geben,word,verb,,"geben, gab, hat gegeben"
+die Kleidung,word,noun,die,
+tragen,word,verb,,"tragen, trug, hat getragen"
+der Mantel,word,noun,der,
+anziehen,word,verb,,"anziehen, zog an, hat angezogen"
+die Schuhe,word,noun,die,
+putzen,word,verb,,"putzen, putzte, hat geputzt"
+das Wetter,word,noun,das,
+sein,word,verb,,"sein, war, ist gewesen"
+die Sonne,word,noun,die,
+scheinen,word,verb,,"scheinen, schien, hat geschienen"
+der Regen,word,noun,der,
+fallen,word,verb,,"fallen, fiel, ist gefallen"
+die Wolke,word,noun,die,
+ziehen,word,verb,,"ziehen, zog, ist gezogen"
+der Schnee,word,noun,der,
+liegen,word,verb,,"liegen, lag, hat gelegen"
+das Eis,word,noun,das,
+schmelzen,word,verb,,"schmelzen, schmolz, ist geschmolzen"
+die Temperatur,word,noun,die,
+steigen,word,verb,,"steigen, stieg, ist gestiegen"
+die Luft,word,noun,die,
+atmen,word,verb,,"atmen, atmete, hat geatmet"
+der Wind,word,noun,der,
+wehen,word,verb,,"wehen, wehte, hat geweht"
