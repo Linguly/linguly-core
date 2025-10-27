@@ -64,7 +64,12 @@ class Masking(Agent):
         return bool(existing_session)
 
     def get_next_learning_phrase(self, user_id: str, goal_id: str) -> str:
-        return learning_phrases.get_next_learning_phrases(user_id, goal_id, top=1)[0]
+        next_learning_phrase_array = learning_phrases.get_next_learning_phrases(
+            user_id, goal_id, top=1
+        )
+        if not next_learning_phrase_array:
+            raise ValueError("No learning phrases available.")
+        return next_learning_phrase_array[0]
 
     def store_next_phrase(self, user_id: str, goal_id: str, next_phrase: str):
         existing_session = self.db.find(
@@ -165,7 +170,7 @@ class Masking(Agent):
                 )
         raise RuntimeError("Failed to generate masked phrase after 5 attempts.")
 
-    def retrieve_next_masking_text(self, user_id: str, user_goal: Goal) -> str:
+    def retrieve_next_masking_text(self, user_id: str, user_goal: Goal, second_attempt=False) -> str:
         session = self.db.find(
             "masking_agent",
             {"user_id": user_id, "goal_id": user_goal.id},
@@ -193,6 +198,11 @@ class Masking(Agent):
                 time.sleep(interval)
                 elapsed += interval
             if not next_text:
+                if( not second_attempt ):
+                    # Try one more time
+                    print("WARNING: Retrying to generate and retrieve next_text after waiting...")
+                    self.generate_next_masking_text(user_id, user_goal)
+                    return self.retrieve_next_masking_text(user_id, user_goal, second_attempt=True)
                 raise RuntimeError("next_text is not available after waiting.")
 
         # Store next_phrase to check it later
@@ -226,17 +236,27 @@ class Masking(Agent):
     def start(
         self, user_id: str, user_goal: Goal, background_tasks: BackgroundTasks
     ) -> List[Message]:
-        if not self.does_session_exist(
-            user_id, user_goal.id
-        ):  # one time initialization
-            self.generate_next_masking_text(user_id, user_goal)
-        masking_text = self.retrieve_next_masking_text(user_id, user_goal)
-        # Prepare next text
-        background_tasks.add_task(self.generate_next_masking_text, user_id, user_goal)
-        # send back the first message with the masked text
-        return [
-            Message(content=masking_text, role="assistant"),
-        ]
+        try:
+            if not self.does_session_exist(
+                user_id, user_goal.id
+            ):  # one time initialization
+                self.generate_next_masking_text(user_id, user_goal)
+            masking_text = self.retrieve_next_masking_text(user_id, user_goal)
+            # Prepare next text
+            background_tasks.add_task(
+                self.generate_next_masking_text, user_id, user_goal
+            )
+            # send back the first message with the masked text
+            return [
+                Message(content=masking_text, role="assistant"),
+            ]
+        except Exception as e:
+            return [
+                Message(
+                    content=f"Error: {str(e)}",
+                    role="assistant",
+                )
+            ]
 
     def reply(
         self,
